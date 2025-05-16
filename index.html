@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <title>Lost Realms -A wonder and fantasy game</title>
+    <title>Lost Realms - A Wonder and Fantasy Game</title>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -19,38 +19,76 @@
                 margin: 0;
                 padding: 0;
                 font-family: "Noto Sans";
+                background-color: #000;
+                color: #FFF;
+                overflow: hidden;
+            }
+            #page-title{
+                font-family: "Noto Sans";
+                margin: 0;
+                padding: 20px 0;
+                text-align: center;
+                background-color: #28465C;
+                font-size: 2.5rem;
+                color: #FFF;
+            }
+            #game-container{
+                font-family: "Noto Sans";
+                display: flex;
+                justify-content: center;
+                background-color: #000;
+                height: calc(100vh - 150px);
+            }
+            canvas{
+                font-family: "Noto Sans";
+                display: block;
+                margin: 0 auto;
+                background: #000;
             }
             footer{
+                font-family: "EB Garamond";
                 font-size: 1.1rem;
                 color: #FFF;
                 background-color: #28465C;
                 text-align: center;
-                margin: auto;
-                font-family: "EB Garamond";
+                padding: 15px 0;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
             }
-            a{
+            #controls{
+                font-family: "EB Garamond";
+                position: absolute;
+                top: 100px;
+                left: 20px;
+                background: rgba(0, 0, 0, .7);
+                padding: 15px;
+                border-radius: 8px;
+                border: 1px solid #1C94E9;
+            }
+            #controls h3{
+                font-family: "EB Garamond";
+                margin-top: 0;
                 color: #1C94E9;
             }
-            #page-title{
-                margin: auto;
-                text-align: center;
-                padding: 0;
-                font-family: "Noto Sans";
-                font-weight: bold;
-                background-color: #28465C;
-                font-size: 4rem;
+            #controls p{
+                font-family: "EB Garamond";
+                margin: 5px 0;
             }
         </style>
-        <script src="jquery-3.7.1.js"></script>
     </head>
     <body>
-        <h1 id="page-title">Lost Realms -A wonder and fantasy game</h1>
-        <main>
-            <div id="main-container">
-                <canvas id="game-canvas"></canvas>
-            </div>
-        </main>
-        <footer id="footer">
+        <h1 id="page-title">Lost Realms - A Wonder and Fantasy Game</h1>
+        <div id="game-container">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+        <div id="controls">
+            <h3>Controls</h3>
+            <p>W/S: Move along Y axis</p>
+            <p>-: Decrease Max Speed</p>
+            <p>=/+ : Increase Max Speed</p>
+        </div>
+        <footer>
             <p>&copy; 2025 Richards Blogs | All Rights Reserved</p>
             <p>Main site: <a href="https://www.richardsblogs.com" target="_blank">www.richardsblogs.com</a></p>
         </footer>
