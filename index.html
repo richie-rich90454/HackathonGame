@@ -5,17 +5,55 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <style>
+            @font-face{
+                font-family: "Noto Sans";
+                src: url("NotoSans-VariableFont_wdth\,wght.ttf");
+                font-weight: 1 1000;
+            }
+            @font-face{
+                font-family: "EB Garamond";
+                src: url("EBGaramond-VariableFont_wght.ttf");
+                font-weight: 1 1000;
+            }
             body{
                 margin: 0;
                 padding: 0;
+                font-family: "Noto Sans";
+            }
+            footer{
+                font-size: 1.1rem;
+                color: #FFF;
+                background-color: #28465C;
+                text-align: center;
+                margin: auto;
+                font-family: "EB Garamond";
+            }
+            a{
+                color: #1C94E9;
+            }
+            #page-title{
+                margin: auto;
+                text-align: center;
+                padding: 0;
+                font-family: "Noto Sans";
+                font-weight: bold;
+                background-color: #28465C;
+                font-size: 4rem;
             }
         </style>
         <script src="jquery-3.7.1.js"></script>
     </head>
     <body>
-        <div id="main-container">
-            mamba
-        </div>
+        <h1 id="page-title">Lost Realms -A wonder and fantasy game</h1>
+        <main>
+            <div id="main-container">
+                <canvas id="game-canvas"></canvas>
+            </div>
+        </main>
+        <footer id="footer">
+            <p>&copy; 2025 Richards Blogs | All Rights Reserved</p>
+            <p>Main site: <a href="https://www.richardsblogs.com" target="_blank">www.richardsblogs.com</a></p>
+        </footer>
         <script src="script.js"></script>
     </body>
 </html>
