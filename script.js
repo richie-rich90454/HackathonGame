@@ -1,4 +1,4 @@
-let config ={
+let config={
     width: window.innerWidth,
     height: window.innerHeight-150,
     skyGradient: ["#000044", "#88CCFF"],
@@ -7,18 +7,22 @@ let config ={
     terrainSegmentWidth: 10,
     terrainMaxDelta: 50,
     terrainMinHeight: 50,
-    terrainMaxHeight: 200
+    terrainMaxHeight: 200,
+    ballSpawnInterval: 100,
+    ballMinRadius: 5,
+    ballMaxRadius: 20
 };
-let state ={
+let state={
     player:{
         x: config.width/4,
         y: config.height/2,
-        z: 100,
         forwardSpeed: 2,
         acceleration: .001,
         maxSpeed: 6
     },
     terrain: [],
+    balls: [],
+    frame: 0,
     keys:{}
 };
 let canvas=document.getElementById("gameCanvas");
@@ -91,21 +95,21 @@ function renderPlane(){
     ctx.fill();
     ctx.restore();
 }
-let controlKeys ={
-    "w": "upY",
-    "s": "downY",
+let controlMap={
+    w: "up",
+    s: "down",
     "-": "slower",
     "=": "faster",
     "+": "faster"
 };
 window.addEventListener("keydown", e=>{
-    let c=controlKeys[e.key];
+    let c=controlMap[e.key];
     if (c){
         state.keys[c]=true;e.preventDefault();
     }
 });
 window.addEventListener("keyup", e=>{
-    let c=controlKeys[e.key];
+    let c=controlMap[e.key];
     if (c){
         state.keys[c]=false;e.preventDefault();
     }
@@ -117,11 +121,10 @@ function handleControls(){
     if (state.keys.slower){
         state.player.maxSpeed=Math.max(state.player.maxSpeed-.05, 1);
     }
-    if (state.keys.upY){
+    if (state.keys.up){
         state.player.y=Math.max(state.player.y-state.player.maxSpeed, 0);
     }
-    if (state.keys.downY){
-        state.player.y=Math.min(state.player.y+state.player.maxSpeed, config.height);
+    if (state.keys.down){state.player.y=Math.min(state.player.y+state.player.maxSpeed, config.height);
     }
 }
 function update(){
@@ -131,21 +134,48 @@ function update(){
         state.player.maxSpeed
     );
     updateTerrain(state.player.forwardSpeed);
+    updateBalls(state.player.forwardSpeed);
+    if (state.frame%config.ballSpawnInterval==0){
+        spawnBall();
+    }
+    state.frame++;
 }
 function draw(){
     ctx.clearRect(0, 0, config.width, config.height);
     renderSky();
     renderTerrain();
+    renderBalls();
     renderPlane();
     ctx.fillStyle="#FFF";
-    ctx.font="16px 'EB Garamond'";
-    ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 220, 30);
-    ctx.fillText(`Max:   ${state.player.maxSpeed.toFixed(2)}`, 220, 50);
+    ctx.font="16px 'Noto Sans'";
+    ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 20, 30);
+    ctx.fillText(`Max:   ${state.player.maxSpeed.toFixed(2)}`, 20, 50);
 }
-function gameLoop(){
+function loop(){
     update();
     draw();
-    requestAnimationFrame(gameLoop);
+    requestAnimationFrame(loop);
+}
+function renderBalls(){
+    state.balls.forEach(b=>{
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+        ctx.fillStyle=b.color;
+        ctx.fill();
+    });
+}
+function spawnBall(){
+    let r=Math.random()*(config.ballMaxRadius-config.ballMinRadius)+config.ballMinRadius;
+    state.balls.push({
+        x: config.width+r,
+        y: Math.random()*(config.height-2*r)+r,
+        r,
+        color: `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, "0")}`
+    });
+}
+function updateBalls(dx){
+    state.balls.forEach(b=>b.x-=dx);
+    state.balls=state.balls.filter(b=>b.x+b.r>0);
 }
 generateInitialTerrain();
-gameLoop();
+loop();
