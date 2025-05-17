@@ -104,16 +104,6 @@ $(document).ready(function(){
     catch (e){
         console.warn("Tone.js initialization failed:", e);
     }
-    try{
-        let bgm=document.getElementById("bgm");
-        if (bgm){
-            bgm.volume=.3;
-            bgm.play();
-        }
-    }
-    catch (e){
-        console.warn("BGM initialization failed:", e);
-    }
     function resizeCanvas(){
         let headerH=document.querySelector("header").offsetHeight;
         let footerH=document.querySelector("footer").offsetHeight;
@@ -370,7 +360,7 @@ $(document).ready(function(){
             ctx.fillStyle=`rgba(255, 215, 0, ${p.opacity})`;
             ctx.beginPath();
             let radius=Math.max(0, p.size*(1-i*.05));
-            ctx.arc(p.x, p.y, radius, 0, Math.PI*2.2);
+            ctx.arc(p.x, p.y, radius, 0, Math.PI*2);
             ctx.fill();
             p.opacity-=p.decay;
         });
@@ -403,7 +393,7 @@ $(document).ready(function(){
     function renderBalls(){
         state.balls.forEach(b=>{
             ctx.beginPath();
-            ctx.arc(b.x, b.y, b.r, 0, Math.PI*2.2);
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
             ctx.fillStyle=b.color;
             ctx.fill();
         });
@@ -506,14 +496,14 @@ $(document).ready(function(){
         gradient.addColorStop(1, config.cursorGradient[1]);
         ctx.fillStyle=gradient;
         ctx.beginPath();
-        ctx.arc(0, 0, config.cursorSize+config.cursorGlowRadius, 0, Math.PI*2.2);
+        ctx.arc(0, 0, config.cursorSize+config.cursorGlowRadius, 0, Math.PI*2);
         ctx.fill();
         let innerGradient=ctx.createRadialGradient(0, 0, 0, 0, 0, config.cursorSize);
         innerGradient.addColorStop(0, config.cursorGradient[0]);
         innerGradient.addColorStop(1, config.cursorGradient[1]);
         ctx.fillStyle=innerGradient;
         ctx.beginPath();
-        ctx.arc(0, 0, config.cursorSize, 0, Math.PI*2.2);
+        ctx.arc(0, 0, config.cursorSize, 0, Math.PI*2);
         ctx.fill();
         ctx.strokeStyle="#000000";
         ctx.lineWidth=2;
@@ -537,7 +527,7 @@ $(document).ready(function(){
         ctx.translate(state.player.x+30, state.player.y-20);
         ctx.fillStyle="rgba(255, 255, 255, .7)";
         ctx.beginPath();
-        ctx.arc(0, 0, 10, 0, Math.PI*2.2);
+        ctx.arc(0, 0, 10, 0, Math.PI*2);
         ctx.fill();
         ctx.fillStyle="#000";
         ctx.font="12px \"EB Garamond\"";
