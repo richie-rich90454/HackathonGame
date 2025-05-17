@@ -1,9 +1,6 @@
 $(document).ready(function(){
     $("#startModal").show();
-    $("#startButton").click(function(){
-        $("#startModal").hide();
-        loop();
-    });
+    let animationFrameId;
     let config={
         width: window.innerWidth,
         height: window.innerHeight,
@@ -47,49 +44,53 @@ $(document).ready(function(){
         score: 0,
         collectedElements: [],
         elements:[
-          {name: "Pyro", color: "#FF4444"},
-          {name: "Hydro", color: "#44AAFF"},
-          {name: "Electro", color: "#AA44FF"},
-          {name: "Dendro", color: "#88CC44"},
-          {name: "Cryo", color: "#44FFFF"},
-          {name: "Geo", color: "#FFAA44"},
-          {name: "Anemo", color: "#44FFAA"}
+         {name: "Pyro", color: "#FF4444"},
+         {name: "Hydro", color: "#44AAFF"},
+         {name: "Electro", color: "#AA44FF"},
+         {name: "Dendro", color: "#88CC44"},
+         {name: "Cryo", color: "#44FFFF"},
+         {name: "Geo", color: "#FFAA44"},
+         {name: "Anemo", color: "#44FFAA"}
         ],
         reactions:[
-          {elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying"},
-          {elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying"},
-          {elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying"},
-          {elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying"},
-          {elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 175, type: "transformative"},
-          {elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"},
-          {elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 60, type: "transformative"},
-          {elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"},
-          {elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
-          {elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
-          {elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative"},
-          {elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative"},
-          {elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative"},
-          {elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative"},
-          {elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 40, type: "transformative"},
-          {elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 40, type: "transformative"},
-          {elements: ["Geo", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"},
-          {elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 40, type: "transformative"},
-          {elements: ["Pyro", "Dendro"], name: "Burning", bonus: 60, type: "transformative"},
-          {elements: ["Dendro", "Pyro"], name: "Burning", bonus: 60, type: "transformative"},
-          {elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status"},
-          {elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status"},
-          {elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 70, type: "transformative"},
-          {elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 70, type: "transformative"},
-          {elements: ["Dendro", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"},
-          {elements: ["Electro", "Dendro"], name: "Quicken", bonus: 60, type: "catalyze"},
-          {elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"},
-          {elements: ["Dendro", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
-          {elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 120, type: "transformative"},
-          {elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}
+         {elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying"},
+         {elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying"},
+         {elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying"},
+         {elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying"},
+         {elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 175, type: "transformative"},
+         {elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"},
+         {elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 60, type: "transformative"},
+         {elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"},
+         {elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
+         {elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
+         {elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative"},
+         {elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative"},
+         {elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative"},
+         {elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative"},
+         {elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 40, type: "transformative"},
+         {elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 40, type: "transformative"},
+         {elements: ["Geo", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"},
+         {elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 40, type: "transformative"},
+         {elements: ["Pyro", "Dendro"], name: "Burning", bonus: 60, type: "transformative"},
+         {elements: ["Dendro", "Pyro"], name: "Burning", bonus: 60, type: "transformative"},
+         {elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status"},
+         {elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status"},
+         {elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 70, type: "transformative"},
+         {elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 70, type: "transformative"},
+         {elements: ["Dendro", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"},
+         {elements: ["Electro", "Dendro"], name: "Quicken", bonus: 60, type: "catalyze"},
+         {elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"},
+         {elements: ["Dendro", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
+         {elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 120, type: "transformative"},
+         {elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}
         ],
         lastReactionMessage:{text: "", opacity: 1, decay: .01},
         synth: null,
-        lastSoundTime: 0
+        lastSoundTime: 0,
+        startTime: null,
+        maxSpeedUsed: 8,
+        reactionCounts:{},
+        gameEnded: false
     };
     let canvas=document.getElementById("gameCanvas");
     let ctx=canvas.getContext("2d");
@@ -104,6 +105,14 @@ $(document).ready(function(){
     catch (e){
         console.warn("Tone.js initialization failed:", e);
     }
+    $("#startButton").click(function(){
+        $("#startModal").hide();
+        state.startTime=Date.now();
+        loop();
+    });
+    $("#restartButton").click(function(){
+        window.location.reload();
+    });
     function resizeCanvas(){
         let headerH=document.querySelector("header").offsetHeight;
         let footerH=document.querySelector("footer").offsetHeight;
@@ -207,9 +216,11 @@ $(document).ready(function(){
     function handleControls(){
         if (state.keys.faster){
             state.player.maxSpeed=Math.min(state.player.maxSpeed+.05, 12);
+            state.maxSpeedUsed=Math.max(state.maxSpeedUsed, state.player.maxSpeed);
         }
         if (state.keys.slower){
             state.player.maxSpeed=Math.max(state.player.maxSpeed-.05, 1);
+            state.maxSpeedUsed=Math.max(state.maxSpeedUsed, state.player.maxSpeed);
         }
         if (state.keys.up){
             state.player.verticalVelocity-=state.player.verticalAcceleration;
@@ -321,6 +332,7 @@ $(document).ready(function(){
         state.lastSoundTime=Date.now();
     }
     function update(){
+        if (state.gameEnded) return;
         handleControls();
         state.player.forwardSpeed=Math.min(
             state.player.forwardSpeed+state.player.acceleration,
@@ -346,7 +358,29 @@ $(document).ready(function(){
         if (state.player.aura&&now-state.player.auraTimestamp>config.reactionWindow){
             state.player.aura=null;
         }
+        if (state.score>=10000&&!state.gameEnded){
+            endGame();
+        }
         state.frame++;
+    }
+    function endGame(){
+        state.gameEnded=true;
+        cancelAnimationFrame(animationFrameId);
+        let timeTaken=((Date.now()-state.startTime)/1000).toFixed(1);
+        $("#total-score").text(`Total Score: ${state.score}`);
+        $("#time-taken").text(`Time Taken: ${timeTaken} seconds`);
+        $("#max-speed-used").text(`Maximum Speed: ${state.maxSpeedUsed.toFixed(2)}`);
+        let reactionList=$("#reaction-list");
+        reactionList.empty();
+        if (Object.keys(state.reactionCounts).length==0){
+            reactionList.append("<li>No reactions performed</li>");
+        }
+        else{
+            for (let reaction in state.reactionCounts){
+                reactionList.append(`<li>${reaction}: ${state.reactionCounts[reaction]}</li>`);
+            }
+        }
+        $("#endModal").show();
     }
     function draw(){
         ctx.clearRect(0, 0, config.width, config.height);
@@ -388,7 +422,7 @@ $(document).ready(function(){
     function loop(){
         update();
         draw();
-        requestAnimationFrame(loop);
+        animationFrameId=requestAnimationFrame(loop);
     }
     function renderBalls(){
         state.balls.forEach(b=>{
@@ -451,6 +485,7 @@ $(document).ready(function(){
                     state.score+=bonusPoints;
                     state.lastReactionMessage.text=`${reaction.name}!+${bonusPoints}`;
                     state.lastReactionMessage.opacity=1;
+                    state.reactionCounts[reaction.name]=(state.reactionCounts[reaction.name]||0)+1;
                     playReactionSound(reaction.name);
                     reactionTriggered=true;
                     if (reaction.type!=="status"){
@@ -469,6 +504,7 @@ $(document).ready(function(){
                     state.score+=bonusPoints;
                     state.lastReactionMessage.text=`${reaction.name}!+${bonusPoints}`;
                     state.lastReactionMessage.opacity=1;
+                    state.reactionCounts[reaction.name]=(state.reactionCounts[reaction.name]||0)+1;
                     playReactionSound(reaction.name);
                     let idx=validElements.findIndex(e=>e.name==elem2);
                     if (idx>=0) validElements.splice(idx, 1);
@@ -544,11 +580,11 @@ $(document).ready(function(){
         btn.addEventListener("touchstart", e=>{
             e.preventDefault();
             state.keys[ctrl]=true;
-        }, {passive:false});
+        },{passive:false});
         btn.addEventListener("touchend", e=>{
             e.preventDefault();
             state.keys[ctrl]=false;
-        }, {passive:false});
+        },{passive:false});
     });
     canvas.addEventListener("touchmove", e=>{
         let t=e.touches[0];
@@ -557,8 +593,8 @@ $(document).ready(function(){
         state.keys.up=y<config.height/2;
         state.keys.down=y>config.height/2;
         e.preventDefault();
-    }, {passive:false});
+    },{passive:false});
     canvas.addEventListener("touchend", ()=>{
-    state.keys.up=state.keys.down=false;
+        state.keys.up=state.keys.down=false;
     });
 });

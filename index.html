@@ -156,7 +156,7 @@
                 margin-top: 0;
                 font-family: "EB Garamond";
             }
-            #startButton{
+            #startButton, #restartButton{
                 background: var(--accent-color);
                 color: white;
                 border: none;
@@ -168,7 +168,7 @@
                 width: 100%;
                 transition: opacity .3s;
             }
-            #startButton:hover{
+            #startButton:hover, #restartButton:hover{
                 opacity: .8;
             }
             .modal-content ul{
@@ -242,6 +242,19 @@
                     <li>Combine elements for reaction bonuses</li>
                 </ul>
                 <button id="startButton">Begin Adventure</button>
+            </div>
+        </div>
+        <div id="endModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Adventure Complete!</h2>
+                <p>Congratulations! You have reached 10,000 points!</p>
+                <h3>Game Metrics</h3>
+                <p id="total-score"></p>
+                <p id="time-taken">Time Taken: </p>
+                <p id="max-speed-used">Maximum Speed: </p>
+                <h3>Reactions Performed</h3>
+                <ul id="reaction-list"></ul>
+                <button id="restartButton">Play Again</button>
             </div>
         </div>
         <script src="script.js"></script>
