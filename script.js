@@ -1,23 +1,23 @@
 $(document).ready(function(){
     let config={
         width: window.innerWidth,
-        height: window.innerHeight-150,
+        height: window.innerHeight-140,
         skyGradient: ["#000044", "#88CCFF"],
         planeColor: "#FFFFFF",
-        planeSize: 20,
+        planeSize: 34.1111,
         terrainSegmentWidth: 10,
-        terrainMaxDelta: 50,
-        terrainMinHeight: 50,
+        terrainMaxDelta: 40,
+        terrainMinHeight: 40,
         terrainMaxHeight: 200,
-        ballSpawnInterval: 100,
+        ballSpawnInterval: 40,
         ballMinRadius: 5,
         ballMaxRadius: 20,
-        cursorSize: 16,
+        cursorSize: 30,
         cursorGlowRadius: 8,
-        cursorGradient: ["#FFD747", "#FFA535"],
-        reactionWindow: 5000,
+        cursorGradient: ["#DE0000", "#28465C"],
+        reactionWindow: 4000,
         maxParticles: 100,
-        maxBalls: 50,
+        maxBalls: 100,
         soundCooldown: 100
     };
     let state={
@@ -42,47 +42,47 @@ $(document).ready(function(){
         score: 0,
         collectedElements: [],
         elements:[
-           { name: "Pyro", color: "#FF4444" },
-           { name: "Hydro", color: "#44AAFF" },
-           { name: "Electro", color: "#AA44FF" },
-           { name: "Dendro", color: "#88CC44" },
-           { name: "Cryo", color: "#44FFFF" },
-           { name: "Geo", color: "#FFAA44" },
-           { name: "Anemo", color: "#44FFAA" }
+           {name: "Pyro", color: "#FF4444"},
+           {name: "Hydro", color: "#44AAFF"},
+           {name: "Electro", color: "#AA44FF"},
+           {name: "Dendro", color: "#88CC44"},
+           {name: "Cryo", color: "#44FFFF"},
+           {name: "Geo", color: "#FFAA44"},
+           {name: "Anemo", color: "#44FFAA"}
         ],
         reactions:[
-           { elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying" },
-           { elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying" },
-           { elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying" },
-           { elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying" },
-           { elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 100, type: "transformative" },
-           { elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 100, type: "transformative" },
-           { elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 80, type: "transformative" },
-           { elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 80, type: "transformative" },
-           { elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative" },
-           { elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative" },
-           { elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative" },
-           { elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative" },
-           { elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative" },
-           { elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative" },
-           { elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 50, type: "transformative" },
-           { elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 50, type: "transformative" },
-           { elements: ["Geo", "Electro"], name: "Crystallize", bonus: 50, type: "transformative" },
-           { elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 50, type: "transformative" },
-           { elements: ["Pyro", "Dendro"], name: "Burning", bonus: 70, type: "transformative" },
-           { elements: ["Dendro", "Pyro"], name: "Burning", bonus: 70, type: "transformative" },
-           { elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status" },
-           { elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status" },
-           { elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 80, type: "transformative" },
-           { elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 80, type: "transformative" },
-           { elements: ["Dendro", "Electro"], name: "Quicken", bonus: 30, type: "catalyze" },
-           { elements: ["Electro", "Dendro"], name: "Quicken", bonus: 30, type: "catalyze" },
-           { elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 120, type: "catalyze" },
-           { elements: ["Dendro", "Quicken"], name: "Spread", bonus: 120, type: "catalyze" },
-           { elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 100, type: "transformative" },
-           { elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 100, type: "transformative" }
+           { elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying"},
+           { elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying"},
+           { elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying"},
+           { elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying"},
+           { elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 175, type: "transformative"},
+           { elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"},
+           { elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 60, type: "transformative"},
+           { elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"},
+           { elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
+           { elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
+           { elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative"},
+           { elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative"},
+           { elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative"},
+           { elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative"},
+           { elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 40, type: "transformative"},
+           { elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 40, type: "transformative"},
+           { elements: ["Geo", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"},
+           { elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 40, type: "transformative"},
+           { elements: ["Pyro", "Dendro"], name: "Burning", bonus: 60, type: "transformative"},
+           { elements: ["Dendro", "Pyro"], name: "Burning", bonus: 60, type: "transformative"},
+           { elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status"},
+           { elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status"},
+           { elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 70, type: "transformative"},
+           { elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 70, type: "transformative"},
+           { elements: ["Dendro", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"},
+           { elements: ["Electro", "Dendro"], name: "Quicken", bonus: 60, type: "catalyze"},
+           { elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"},
+           { elements: ["Dendro", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
+           { elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 120, type: "transformative"},
+           { elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}
         ],
-        lastReactionMessage:{ text: "", opacity: 1, decay: .01 },
+        lastReactionMessage:{text: "", opacity: 1, decay: .01},
         synth: null,
         lastSoundTime: 0
     };
@@ -109,7 +109,7 @@ $(document).ready(function(){
     }
     function resizeCanvas(){
         config.width=window.innerWidth;
-        config.height=window.innerHeight-150;
+        config.height=window.innerHeight-140;
         canvas.width=config.width;
         canvas.height=config.height;
         state.player.x=config.width/4;
@@ -187,7 +187,9 @@ $(document).ready(function(){
         s: "down",
         "-": "slower",
         "=": "faster",
-        "+": "faster"
+        "+": "faster",
+        a: "slower",
+        d: "faster"
     };
     window.addEventListener("keydown", e=>{
         let c=controlMap[e.key.toLowerCase()];
@@ -238,77 +240,77 @@ $(document).ready(function(){
         let synthConfig;
         switch(reactionName){
             case "Vaporize":
-                synthConfig={ oscillator:{ type: "sine" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "sine"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("G4", "8n", Tone.now(), .5);
                 break;
             case "Melt":
-                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("A4", "8n", Tone.now(), .5);
                 break;
             case "Overloaded":
-                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("E3", "4n", Tone.now(), .5);
                 break;
             case "Superconduct":
-                synthConfig={ oscillator:{ type: "square" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "square"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("F3", "8n", Tone.now(), .5);
                 break;
             case "Electro-Charged":
-                synthConfig={ oscillator:{ type: "pulse" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "pulse"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("D4", "8n", Tone.now(), .5);
                 break;
             case "Swirl":
-                synthConfig={ oscillator:{ type: "sine" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                synthConfig={ oscillator:{type: "sine"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("C5", "4n", Tone.now(), .5);
                 break;
             case "Crystallize":
-                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("B3", "8n", Tone.now(), .5);
                 break;
             case "Burning":
-                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("G3", "4n", Tone.now(), .5);
                 break;
             case "Frozen":
-                synthConfig={ oscillator:{ type: "sine" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "sine"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("A5", "8n", Tone.now(), .5);
                 break;
             case "Bloom":
-                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("E4", "8n", Tone.now(), .5);
                 break;
             case "Quicken":
-                synthConfig={ oscillator:{ type: "pulse" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "pulse"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("F4", "8n", Tone.now(), .5);
                 break;
             case "Aggravate":
-                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("G4", "8n", Tone.now(), .5);
                 break;
             case "Spread":
-                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("A4", "8n", Tone.now(), .5);
                 break;
             case "Burgeon":
-                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("E3", "4n", Tone.now(), .5);
                 break;
             case "Hyperbloom":
-                synthConfig={ oscillator:{ type: "pulse" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                synthConfig={ oscillator:{type: "pulse"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("D4", "8n", Tone.now(), .5);
                 break;
@@ -336,7 +338,7 @@ $(document).ready(function(){
         if (state.frame % config.ballSpawnInterval==0&&state.balls.length<config.maxBalls){
             spawnBall();
         }
-        const now=Date.now();
+        let now=Date.now();
         state.collectedElements=state.collectedElements.filter(e=>now-e.timestamp<config.reactionWindow);
         if (state.player.aura&&now-state.player.auraTimestamp>config.reactionWindow){
             state.player.aura=null;
@@ -361,16 +363,17 @@ $(document).ready(function(){
         });
         ctx.restore();
         renderGoldenAceCursor();
+        renderReactionTimer();
         ctx.fillStyle="#FFF";
         ctx.font="16px 'EB Garamond'";
         ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 220, 30);
-        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 220, 50);
+        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 220, 40);
         ctx.fillText(`Score: ${state.score}`, 220, 70);
         if (state.lastReactionMessage.text){
             ctx.globalAlpha=state.lastReactionMessage.opacity;
             ctx.fillStyle="#FFD700";
             ctx.font="20px 'EB Garamond'";
-            ctx.fillText(state.lastReactionMessage.text, config.width/2-50, config.height/2);
+            ctx.fillText(state.lastReactionMessage.text, config.width/2-40, config.height/2);
             state.lastReactionMessage.opacity-=state.lastReactionMessage.decay;
             if (state.lastReactionMessage.opacity<=0){
                 state.lastReactionMessage.text="";
@@ -398,9 +401,10 @@ $(document).ready(function(){
         state.balls.push({
             x: config.width+r,
             y: Math.random()*(config.height-2*r)+r,
-            r,
+            r: r*1.2,
             color: element.color,
-            element: element.name
+            element: element.name,
+            collectTimestamp: 0
         });
     }
     function updateBalls(dx){
@@ -413,6 +417,7 @@ $(document).ready(function(){
                 playCollectionSound();
                 let basePoints=Math.floor(b.r*10);
                 state.score+=basePoints;
+                b.collectTimestamp=Date.now();
                 checkReactions(b.element, basePoints);
                 return false;
             }
@@ -420,7 +425,7 @@ $(document).ready(function(){
         });
     }
     function checkReactions(newElement, basePoints){
-        const now=Date.now();
+        let now=Date.now();
         let reactionTriggered=false;
         let auraConsumed=false;
         if (state.player.aura){
@@ -453,7 +458,7 @@ $(document).ready(function(){
             }
         }
         if (!reactionTriggered){
-            let validElements=state.collectedElements.concat({ name: newElement, timestamp: now });
+            let validElements=state.collectedElements.concat({name: newElement, timestamp: now });
             for (let reaction of state.reactions){
                 let [elem1, elem2]=reaction.elements;
                 if ((elem2=="Bloom"||elem2=="Quicken")&&validElements.some(e=>e.name==elem2)&&newElement==elem1){
@@ -506,6 +511,24 @@ $(document).ready(function(){
         ctx.lineTo(0, config.cursorSize/2);
         ctx.closePath();
         ctx.stroke();
+        ctx.restore();
+    }
+    function renderReactionTimer(){
+        if (!state.player.aura) return;
+        let now=Date.now();
+        let timeLeft=config.reactionWindow-(now-state.player.auraTimestamp);
+        if (timeLeft<=0) return;
+        ctx.save();
+        ctx.translate(state.player.x+30, state.player.y-20);
+        ctx.fillStyle="rgba(255, 255, 255, .7)";
+        ctx.beginPath();
+        ctx.arc(0, 0, 10, 0, Math.PI*2.2);
+        ctx.fill();
+        ctx.fillStyle="#000";
+        ctx.font="12px 'EB Garamond'";
+        ctx.textAlign="center";
+        ctx.textBaseline="middle";
+        ctx.fillText((timeLeft/1000).toFixed(1), 0, 0);
         ctx.restore();
     }
     generateInitialTerrain();
