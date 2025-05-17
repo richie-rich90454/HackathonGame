@@ -379,9 +379,9 @@ $(document).ready(function(){
         renderReactionTimer();
         ctx.fillStyle="#FFF";
         ctx.font="16px \"EB Garamond\"";
-        ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 300, 30);
-        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 300, 50);
-        ctx.fillText(`Score: ${state.score}`, 300, 70);
+        document.getElementById("cursor-speed").innerHTML=`Speed: ${state.player.forwardSpeed.toFixed(2)}`;
+        document.getElementById("cursor-max-speed").innerHTML=`Max: ${state.player.maxSpeed.toFixed(2)}`;
+        document.getElementById("cursor-score").innerHTML=`Score: ${state.score}`;
         if (state.lastReactionMessage.text){
             ctx.globalAlpha=state.lastReactionMessage.opacity;
             ctx.fillStyle="#FFD700";

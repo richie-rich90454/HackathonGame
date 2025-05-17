@@ -61,21 +61,23 @@
                 color: #FFF;
                 background-color: var(--primary-color);
                 text-align: center;
-                padding: 15px 0;
+                padding: 1rem 0;
                 position: fixed;
                 bottom: 0;
                 width: 100%;
                 z-index: 1002;
             }
-            #controls{
+            #controls {
                 font-family: "EB Garamond";
-                position: absolute;
-                top: 100px;
+                position: fixed;
+                top: 150px;
                 left: 20px;
-                background: rgba(0, 0, 0, .7);
+                background: rgba(0, 0, 0, 0.7);
                 padding: 15px;
                 border-radius: 8px;
                 border: 1px solid var(--accent-color);
+                z-index: 1001;
+                max-width: 250px;
             }
             #controls h3{
                 font-family: "EB Garamond";
@@ -86,16 +88,9 @@
                 font-family: "EB Garamond";
                 margin: 5px 0;
             }
-            @media (max-width: 768px){
+            @media (max-width: 1400px){
                 #controls{
-                    top: 80px;
-                    left: 10px;
-                    padding: 10px;
-                }
-            }
-            @media (max-width: 600px){
-                #controls{
-                    display: none;
+                    font-size: .6rem;
                 }
                 #touch-controls{
                     display: flex;
@@ -118,8 +113,8 @@
                     color: #fff;
                 }
                 h1#page-title{
-                    font-size: 1.8rem;
-                    padding: 16px 0;
+                    font-size: 1rem;
+                    padding: 10px 0;
                 }
                 footer{
                     z-index: 1002;
@@ -129,11 +124,11 @@
                 }
                 .modal-content{
                     max-width: 90%;
-                    padding: 20px;
+                    padding: 10px;
                 }
                 .modal-content button{
                     font-size: 1.1rem;
-                    padding: 14px;
+                    padding: 7px;
                 }
             }
             .modal{
@@ -198,11 +193,23 @@
                 margin-left: -50vw;
                 margin-right: -50vw;
             }
+            .notice{
+                font-family: "EB Garamond";
+                margin: auto;
+                text-align: center;
+                background-color: #28465C;
+                color: #FFF;
+            }
+            a{
+                color: #1C94E9;
+            }
         </style>
     </head>
     <body>
         <header>
             <h1 id="page-title">Lost Realms - A Wonder and Fantasy Game</h1>
+            <p class="notice">&copy; 2025 Richards Blogs | All Rights Reserved</p>
+            <p class="notice">Main site: <a href="https://www.richardsblogs.com" target="_blank">www.richardsblogs.com</a></p>
         </header>
         <main>
         <div id="game-container">
@@ -210,21 +217,22 @@
         </div>
         <div id="controls">
             <h3>Controls</h3>
-            <p>w/s: Move along y-axis</p>
+            <p>w/s/▲/▼: Move along y-axis</p>
             <p>-/a: Decrease Max Speed</p>
             <p>=/+/d : Increase Max Speed</p>
+            <h3>Statistics</h3>
+            <p id="cursor-speed">Speed: </p>
+            <p id="cursor-max-speed">Max: </p>
+            <p id="cursor-score">Score: </p>
         </div>
         </main>
+        <footer></footer>
         <div id="touch-controls">
             <button id="upBtn">▲</button>
             <button id="downBtn">▼</button>
             <button id="slowerBtn">-</button>
             <button id="fasterBtn">+</button>
         </div>
-        <footer>
-            <p>&copy; 2025 Richards Blogs | All Rights Reserved</p>
-            <p>Main site: <a href="https://www.richardsblogs.com" target="_blank">www.richardsblogs.com</a></p>
-        </footer>
         <div id="startModal" class="modal">
             <div class="modal-content">
                 <p>Collect elemental orbs to create reactions and score points!</p>
