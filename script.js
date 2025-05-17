@@ -1,7 +1,12 @@
 $(document).ready(function(){
+    $("#startModal").show();
+    $("#startButton").click(function(){
+        $("#startModal").hide();
+        loop();
+    });
     let config={
         width: window.innerWidth,
-        height: window.innerHeight-140,
+        height: window.innerHeight,
         skyGradient: ["#000044", "#88CCFF"],
         planeColor: "#FFFFFF",
         planeSize: 33.5,
@@ -110,8 +115,10 @@ $(document).ready(function(){
         console.warn("BGM initialization failed:", e);
     }
     function resizeCanvas(){
+        let headerH=document.querySelector("header").offsetHeight;
+        let footerH=document.querySelector("footer").offsetHeight;
         config.width=window.innerWidth;
-        config.height=window.innerHeight-140;
+        config.height=window.innerHeight-headerH-footerH;
         canvas.width=config.width;
         canvas.height=config.height;
         state.player.x=config.width/4;
@@ -371,14 +378,14 @@ $(document).ready(function(){
         renderGoldenAceCursor();
         renderReactionTimer();
         ctx.fillStyle="#FFF";
-        ctx.font="16px 'EB Garamond'";
-        ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 220, 30);
-        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 220, 50);
-        ctx.fillText(`Score: ${state.score}`, 220, 70);
+        ctx.font="16px \"EB Garamond\"";
+        ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 300, 30);
+        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 300, 50);
+        ctx.fillText(`Score: ${state.score}`, 300, 70);
         if (state.lastReactionMessage.text){
             ctx.globalAlpha=state.lastReactionMessage.opacity;
             ctx.fillStyle="#FFD700";
-            ctx.font="20px 'EB Garamond'";
+            ctx.font="20px \"EB Garamond\"";
             ctx.fillText(state.lastReactionMessage.text, config.width/2-40, config.height/2);
             state.lastReactionMessage.opacity-=state.lastReactionMessage.decay;
             if (state.lastReactionMessage.opacity<=0){
@@ -533,12 +540,35 @@ $(document).ready(function(){
         ctx.arc(0, 0, 10, 0, Math.PI*2.2);
         ctx.fill();
         ctx.fillStyle="#000";
-        ctx.font="12px 'EB Garamond'";
+        ctx.font="12px \"EB Garamond\"";
         ctx.textAlign="center";
         ctx.textBaseline="middle";
         ctx.fillText((timeLeft/1000).toFixed(1), 0, 0);
         ctx.restore();
     }
-    generateInitialTerrain();
-    loop();
+    [["upBtn","up"], ["downBtn","down"], ["slowerBtn","slower"], ["fasterBtn","faster"]].forEach(([btnId, ctrl])=>{
+        let btn=document.getElementById(btnId);
+        if (!btn){
+            return;
+        }
+        btn.addEventListener("touchstart", e=>{
+            e.preventDefault();
+            state.keys[ctrl]=true;
+        }, {passive:false});
+        btn.addEventListener("touchend", e=>{
+            e.preventDefault();
+            state.keys[ctrl]=false;
+        }, {passive:false});
+    });
+    canvas.addEventListener("touchmove", e=>{
+        let t=e.touches[0];
+        let headerH=document.querySelector("header").offsetHeight;
+        let y=t.clientY-headerH;
+        state.keys.up=y<config.height/2;
+        state.keys.down=y>config.height/2;
+        e.preventDefault();
+    }, {passive:false});
+    canvas.addEventListener("touchend", ()=>{
+    state.keys.up=state.keys.down=false;
+    });
 });
