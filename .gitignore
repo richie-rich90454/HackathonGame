@@ -99,5 +99,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-#ignores midi file
-lost_realms.mid
