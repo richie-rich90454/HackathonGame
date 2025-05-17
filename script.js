@@ -4,7 +4,7 @@ $(document).ready(function(){
         height: window.innerHeight-140,
         skyGradient: ["#000044", "#88CCFF"],
         planeColor: "#FFFFFF",
-        planeSize: 34.1111,
+        planeSize: 33.5,
         terrainSegmentWidth: 10,
         terrainMaxDelta: 40,
         terrainMinHeight: 40,
@@ -51,36 +51,36 @@ $(document).ready(function(){
            {name: "Anemo", color: "#44FFAA"}
         ],
         reactions:[
-           { elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying"},
-           { elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying"},
-           { elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying"},
-           { elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying"},
-           { elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 175, type: "transformative"},
-           { elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"},
-           { elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 60, type: "transformative"},
-           { elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"},
-           { elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
-           { elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
-           { elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative"},
-           { elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative"},
-           { elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative"},
-           { elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative"},
-           { elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 40, type: "transformative"},
-           { elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 40, type: "transformative"},
-           { elements: ["Geo", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"},
-           { elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 40, type: "transformative"},
-           { elements: ["Pyro", "Dendro"], name: "Burning", bonus: 60, type: "transformative"},
-           { elements: ["Dendro", "Pyro"], name: "Burning", bonus: 60, type: "transformative"},
-           { elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status"},
-           { elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status"},
-           { elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 70, type: "transformative"},
-           { elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 70, type: "transformative"},
-           { elements: ["Dendro", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"},
-           { elements: ["Electro", "Dendro"], name: "Quicken", bonus: 60, type: "catalyze"},
-           { elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"},
-           { elements: ["Dendro", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
-           { elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 120, type: "transformative"},
-           { elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}
+           {elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying"},
+           {elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying"},
+           {elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying"},
+           {elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying"},
+           {elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 175, type: "transformative"},
+           {elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"},
+           {elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 60, type: "transformative"},
+           {elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"},
+           {elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
+           {elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
+           {elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative"},
+           {elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative"},
+           {elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative"},
+           {elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative"},
+           {elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 40, type: "transformative"},
+           {elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 40, type: "transformative"},
+           {elements: ["Geo", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"},
+           {elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 40, type: "transformative"},
+           {elements: ["Pyro", "Dendro"], name: "Burning", bonus: 60, type: "transformative"},
+           {elements: ["Dendro", "Pyro"], name: "Burning", bonus: 60, type: "transformative"},
+           {elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status"},
+           {elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status"},
+           {elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 70, type: "transformative"},
+           {elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 70, type: "transformative"},
+           {elements: ["Dendro", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"},
+           {elements: ["Electro", "Dendro"], name: "Quicken", bonus: 60, type: "catalyze"},
+           {elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"},
+           {elements: ["Dendro", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
+           {elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 120, type: "transformative"},
+           {elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}
         ],
         lastReactionMessage:{text: "", opacity: 1, decay: .01},
         synth: null,
@@ -95,7 +95,8 @@ $(document).ready(function(){
     try{
         state.synth=new Tone.PolySynth(Tone.Synth).toDestination();
         Tone.start();
-    } catch (e){
+    }
+    catch (e){
         console.warn("Tone.js initialization failed:", e);
     }
     try{
@@ -104,7 +105,8 @@ $(document).ready(function(){
             bgm.volume=.3;
             bgm.play();
         }
-    } catch (e){
+    }
+    catch (e){
         console.warn("BGM initialization failed:", e);
     }
     function resizeCanvas(){
@@ -235,8 +237,12 @@ $(document).ready(function(){
         }
     }
     function playReactionSound(reactionName){
-        if (Date.now()-state.lastSoundTime<config.soundCooldown) return;
-        if (!state.synth) return;
+        if (Date.now()-state.lastSoundTime<config.soundCooldown){
+            return;
+        }
+        if (!state.synth){
+            return;
+        }
         let synthConfig;
         switch(reactionName){
             case "Vaporize":
@@ -367,7 +373,7 @@ $(document).ready(function(){
         ctx.fillStyle="#FFF";
         ctx.font="16px 'EB Garamond'";
         ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 220, 30);
-        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 220, 40);
+        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 220, 50);
         ctx.fillText(`Score: ${state.score}`, 220, 70);
         if (state.lastReactionMessage.text){
             ctx.globalAlpha=state.lastReactionMessage.opacity;
@@ -514,7 +520,9 @@ $(document).ready(function(){
         ctx.restore();
     }
     function renderReactionTimer(){
-        if (!state.player.aura) return;
+        if (!state.player.aura){
+            return;
+        }
         let now=Date.now();
         let timeLeft=config.reactionWindow-(now-state.player.auraTimestamp);
         if (timeLeft<=0) return;
