@@ -25,9 +25,9 @@ async function initAudio(){
 }
 async function loadMidi(){
     try{
-        const res=await fetch("lost_realms.mid");
+        let res=await fetch("lost_realms.mid");
         if (!res.ok) throw new Error(res.status);
-        const buf=await res.arrayBuffer();
+        let buf=await res.arrayBuffer();
         return new Midi(buf);
     }
     catch (e){
@@ -47,33 +47,37 @@ async function startMusic(){
     }
     await Tone.start();
     Tone.Transport.cancel();
-    const now=Tone.now()+.1;
-    midiData.tracks.forEach(track=>{
-        track.notes.forEach(n=>{
-            synth.triggerAttackRelease(
-                n.name,
-                n.duration,
-                n.time+now,
-                n.velocity*.75
-            );
+    let scheduleNotes=(time)=>{
+        midiData.tracks.forEach(track=>{
+            track.notes.forEach(n=>{
+                synth.triggerAttackRelease(
+                    n.name,
+                    n.duration,
+                    time+n.time,
+                    n.velocity*.75
+                );
+            });
         });
-    });
+    };
+    let now=Tone.now()+.1;
+    scheduleNotes(now);
+    Tone.Transport.scheduleRepeat((time)=>{
+        scheduleNotes(time);
+    }, midiData.duration);
     if (midiData.header.tempos.length){
         Tone.Transport.bpm.value=midiData.header.tempos[0].bpm;
     }
     Tone.Transport.timeSignature=[3, 4];
     Tone.Transport.start(now);
     isPlaying=true;
-    setTimeout(()=>{
-        Tone.Transport.stop();
-        isPlaying=false;
-    }, (midiData.duration+1)*1000);
 }
 window.addEventListener("DOMContentLoaded", async ()=>{
     await initAudio();
     await loadMidi();
-    const unlockAndPlay=async ()=>{
-        if (!isPlaying) await startMusic();
+    let unlockAndPlay=async ()=>{
+        if (!isPlaying){
+            await startMusic();
+        }
         window.removeEventListener("click", unlockAndPlay);
         window.removeEventListener("keydown", unlockAndPlay);
     };

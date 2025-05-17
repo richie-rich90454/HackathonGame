@@ -9,6 +9,10 @@
         <script src="Tone.js"></script>
         <script src="Midi.js"></script>
         <style>
+            :root{
+                --primary-color: #28465C;
+                --accent-color: #1C94E9;
+            }
             @font-face{
                 font-family: "Noto Sans";
                 src: url("NotoSans-VariableFont_wdth\,wght.ttf");
@@ -22,29 +26,29 @@
             body{
                 margin: 0;
                 padding: 0;
-                font-family: "Noto Sans";
+                font-family: "Noto Sans", sans-serif;
                 background-color: #000;
                 color: #FFF;
                 overflow: hidden;
             }
             #page-title{
-                font-family: "Noto Sans";
+                font-family: "Noto Sans", sans-serif;
                 margin: 0;
                 padding: 20px 0;
                 text-align: center;
-                background-color: #28465C;
+                background-color: var(--primary-color);
                 font-size: 2.5rem;
                 color: #FFF;
             }
             #game-container{
-                font-family: "Noto Sans";
+                font-family: "Noto Sans", sans-serif;
                 display: flex;
                 justify-content: center;
                 background-color: #000;
                 height: calc(100vh - 150px);
             }
             canvas{
-                font-family: "Noto Sans";
+                font-family: "Noto Sans", sans-serif;
                 display: block;
                 margin: 0 auto;
                 background: #000;
@@ -53,7 +57,7 @@
                 font-family: "EB Garamond";
                 font-size: 1.1rem;
                 color: #FFF;
-                background-color: #28465C;
+                background-color: var(--primary-color);
                 text-align: center;
                 padding: 15px 0;
                 position: fixed;
@@ -68,21 +72,31 @@
                 background: rgba(0, 0, 0, .7);
                 padding: 15px;
                 border-radius: 8px;
-                border: 1px solid #1C94E9;
+                border: 1px solid var(--accent-color);
             }
             #controls h3{
                 font-family: "EB Garamond";
                 margin-top: 0;
-                color: #1C94E9;
+                color: var(--accent-color);
             }
             #controls p{
                 font-family: "EB Garamond";
                 margin: 5px 0;
             }
+            @media (max-width: 768px){
+                #controls{
+                    top: 80px;
+                    left: 10px;
+                    padding: 10px;
+                }
+            }
         </style>
     </head>
     <body>
-        <h1 id="page-title">Lost Realms - A Wonder and Fantasy Game</h1>
+        <header>
+            <h1 id="page-title">Lost Realms - A Wonder and Fantasy Game</h1>
+        </header>
+        <main>
         <div id="game-container">
             <canvas id="gameCanvas"></canvas>
         </div>
@@ -92,6 +106,7 @@
             <p>-/a: Decrease Max Speed</p>
             <p>=/+/d : Increase Max Speed</p>
         </div>
+        </main>
         <footer>
             <p>&copy; 2025 Richards Blogs | All Rights Reserved</p>
             <p>Main site: <a href="https://www.richardsblogs.com" target="_blank">www.richardsblogs.com</a></p>
