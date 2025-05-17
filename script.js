@@ -14,7 +14,11 @@ $(document).ready(function(){
         ballMaxRadius: 20,
         cursorSize: 16,
         cursorGlowRadius: 8,
-        cursorGradient: ["#FFD747", "#FFA535"]
+        cursorGradient: ["#FFD747", "#FFA535"],
+        reactionWindow: 5000,
+        maxParticles: 100,
+        maxBalls: 50,
+        soundCooldown: 100
     };
     let state={
         player:{
@@ -26,23 +30,94 @@ $(document).ready(function(){
             verticalVelocity: 0,
             verticalAcceleration: .2,
             maxVerticalSpeed: 5,
-            friction: .9
+            friction: .9,
+            aura: null,
+            auraTimestamp: 0
         },
         terrain: [],
         balls: [],
         frame: 0,
         keys:{},
-        trailParticles:[]
+        trailParticles:[],
+        score: 0,
+        collectedElements: [],
+        elements:[
+           { name: "Pyro", color: "#FF4444" },
+           { name: "Hydro", color: "#44AAFF" },
+           { name: "Electro", color: "#AA44FF" },
+           { name: "Dendro", color: "#88CC44" },
+           { name: "Cryo", color: "#44FFFF" },
+           { name: "Geo", color: "#FFAA44" },
+           { name: "Anemo", color: "#44FFAA" }
+        ],
+        reactions:[
+           { elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying" },
+           { elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying" },
+           { elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying" },
+           { elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying" },
+           { elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 100, type: "transformative" },
+           { elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 100, type: "transformative" },
+           { elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 80, type: "transformative" },
+           { elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 80, type: "transformative" },
+           { elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative" },
+           { elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative" },
+           { elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative" },
+           { elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative" },
+           { elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative" },
+           { elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative" },
+           { elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 50, type: "transformative" },
+           { elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 50, type: "transformative" },
+           { elements: ["Geo", "Electro"], name: "Crystallize", bonus: 50, type: "transformative" },
+           { elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 50, type: "transformative" },
+           { elements: ["Pyro", "Dendro"], name: "Burning", bonus: 70, type: "transformative" },
+           { elements: ["Dendro", "Pyro"], name: "Burning", bonus: 70, type: "transformative" },
+           { elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status" },
+           { elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status" },
+           { elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 80, type: "transformative" },
+           { elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 80, type: "transformative" },
+           { elements: ["Dendro", "Electro"], name: "Quicken", bonus: 30, type: "catalyze" },
+           { elements: ["Electro", "Dendro"], name: "Quicken", bonus: 30, type: "catalyze" },
+           { elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 120, type: "catalyze" },
+           { elements: ["Dendro", "Quicken"], name: "Spread", bonus: 120, type: "catalyze" },
+           { elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 100, type: "transformative" },
+           { elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 100, type: "transformative" }
+        ],
+        lastReactionMessage:{ text: "", opacity: 1, decay: .01 },
+        synth: null,
+        lastSoundTime: 0
     };
     let canvas=document.getElementById("gameCanvas");
     let ctx=canvas.getContext("2d");
+    if (!ctx){
+        console.error("Canvas context not supported");
+        return;
+    }
+    try{
+        state.synth=new Tone.PolySynth(Tone.Synth).toDestination();
+        Tone.start();
+    } catch (e){
+        console.warn("Tone.js initialization failed:", e);
+    }
+    try{
+        let bgm=document.getElementById("bgm");
+        if (bgm){
+            bgm.volume=.3;
+            bgm.play();
+        }
+    } catch (e){
+        console.warn("BGM initialization failed:", e);
+    }
     function resizeCanvas(){
         config.width=window.innerWidth;
         config.height=window.innerHeight-150;
         canvas.width=config.width;
         canvas.height=config.height;
+        state.player.x=config.width/4;
         state.player.y=config.height/2;
         generateInitialTerrain();
+        state.balls.forEach(b=>{
+            b.y=Math.min(b.y, config.height-b.r);
+        });
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
@@ -63,16 +138,17 @@ $(document).ready(function(){
         for (let p of state.terrain){
             p.x-=dx;
         }
-        if (state.terrain[0].x<-config.terrainSegmentWidth){
-            state.terrain.shift();
-        }
+        state.terrain=state.terrain.filter(p=>p.x>-config.terrainSegmentWidth*2);
         let last=state.terrain[state.terrain.length-1];
-        let newH=config.height-(config.height-last.y+(Math.random()*2-1)*config.terrainMaxDelta);
-        newH=Math.max(config.height-config.terrainMaxHeight, Math.min(config.height-config.terrainMinHeight, newH));
-        state.terrain.push({
-            x: last.x+config.terrainSegmentWidth,
-            y: newH
-        });
+        while (last.x<config.width+config.terrainSegmentWidth){
+            let h=config.height-last.y+(Math.random()*2-1)*config.terrainMaxDelta*.5;
+            h=Math.max(config.terrainMinHeight, Math.min(config.terrainMaxHeight, h));
+            state.terrain.push({
+                x: last.x+config.terrainSegmentWidth,
+                y: config.height-h
+            });
+            last=state.terrain[state.terrain.length-1];
+        }
     }
     function renderSky(){
         let grad=ctx.createLinearGradient(0, 0, 0, config.height);
@@ -95,12 +171,12 @@ $(document).ready(function(){
     function renderPlane(){
         ctx.save();
         ctx.translate(state.player.x, state.player.y);
-        let tiltAngle=Math.max(-Math.PI/6.66754, Math.min(Math.PI/6.66754, state.player.verticalVelocity*.1));
+        let tiltAngle=Math.max(-Math.PI/6, Math.min(Math.PI/6, state.player.verticalVelocity*.1));
         ctx.rotate(tiltAngle);
         ctx.fillStyle=config.planeColor;
         ctx.beginPath();
         ctx.moveTo(config.planeSize, 0);
-        ctx.lineTo(-config.planeSize, -config.planeSize/2);
+        ctx.lineTo(-config.planeSize,-config.planeSize/2);
         ctx.lineTo(-config.planeSize, config.planeSize/2);
         ctx.closePath();
         ctx.fill();
@@ -114,15 +190,17 @@ $(document).ready(function(){
         "+": "faster"
     };
     window.addEventListener("keydown", e=>{
-        let c=controlMap[e.key];
+        let c=controlMap[e.key.toLowerCase()];
         if (c){
-            state.keys[c]=true;e.preventDefault();
+            state.keys[c]=true;
+            e.preventDefault();
         }
     });
     window.addEventListener("keyup", e=>{
-        let c=controlMap[e.key];
+        let c=controlMap[e.key.toLowerCase()];
         if (c){
-            state.keys[c]=false;e.preventDefault();
+            state.keys[c]=false;
+            e.preventDefault();
         }
     });
     function handleControls(){
@@ -141,9 +219,101 @@ $(document).ready(function(){
         else{
             state.player.verticalVelocity*=state.player.friction;
         }
-        state.player.verticalVelocity=Math.max(-state.player.maxVerticalSpeed, Math.min(state.player.maxVerticalSpeed, state.player.verticalVelocity)
-        );
-        state.player.y=Math.max(0, Math.min(config.height, state.player.y+state.player.verticalVelocity));
+        state.player.verticalVelocity=Math.max(-state.player.maxVerticalSpeed, Math.min(state.player.maxVerticalSpeed, state.player.verticalVelocity));
+        let buffer=20;
+        state.player.y=Math.max(buffer, Math.min(config.height-buffer, state.player.y+state.player.verticalVelocity));
+    }
+    function playCollectionSound(){
+        if (Date.now()-state.lastSoundTime<config.soundCooldown){
+            return;
+        }
+        if (state.synth){
+            state.synth.triggerAttackRelease("E4", "8n", Tone.now(), 1.0);
+            state.lastSoundTime=Date.now();
+        }
+    }
+    function playReactionSound(reactionName){
+        if (Date.now()-state.lastSoundTime<config.soundCooldown) return;
+        if (!state.synth) return;
+        let synthConfig;
+        switch(reactionName){
+            case "Vaporize":
+                synthConfig={ oscillator:{ type: "sine" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("G4", "8n", Tone.now(), .5);
+                break;
+            case "Melt":
+                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("A4", "8n", Tone.now(), .5);
+                break;
+            case "Overloaded":
+                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("E3", "4n", Tone.now(), .5);
+                break;
+            case "Superconduct":
+                synthConfig={ oscillator:{ type: "square" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("F3", "8n", Tone.now(), .5);
+                break;
+            case "Electro-Charged":
+                synthConfig={ oscillator:{ type: "pulse" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("D4", "8n", Tone.now(), .5);
+                break;
+            case "Swirl":
+                synthConfig={ oscillator:{ type: "sine" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("C5", "4n", Tone.now(), .5);
+                break;
+            case "Crystallize":
+                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("B3", "8n", Tone.now(), .5);
+                break;
+            case "Burning":
+                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("G3", "4n", Tone.now(), .5);
+                break;
+            case "Frozen":
+                synthConfig={ oscillator:{ type: "sine" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("A5", "8n", Tone.now(), .5);
+                break;
+            case "Bloom":
+                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("E4", "8n", Tone.now(), .5);
+                break;
+            case "Quicken":
+                synthConfig={ oscillator:{ type: "pulse" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("F4", "8n", Tone.now(), .5);
+                break;
+            case "Aggravate":
+                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("G4", "8n", Tone.now(), .5);
+                break;
+            case "Spread":
+                synthConfig={ oscillator:{ type: "triangle" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("A4", "8n", Tone.now(), .5);
+                break;
+            case "Burgeon":
+                synthConfig={ oscillator:{ type: "sawtooth" }, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("E3", "4n", Tone.now(), .5);
+                break;
+            case "Hyperbloom":
+                synthConfig={ oscillator:{ type: "pulse" }, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+                state.synth.set(synthConfig);
+                state.synth.triggerAttackRelease("D4", "8n", Tone.now(), .5);
+                break;
+        }
+        state.lastSoundTime=Date.now();
     }
     function update(){
         handleControls();
@@ -153,16 +323,23 @@ $(document).ready(function(){
         );
         updateTerrain(state.player.forwardSpeed);
         updateBalls(state.player.forwardSpeed);
-        state.trailParticles.push({
-            x: state.player.x,
-            y: state.player.y,
-            size: config.cursorSize*.8,
-            opacity: 1,
-            decay: .05
-        });
+        if (state.trailParticles.length<config.maxParticles){
+            state.trailParticles.push({
+                x: state.player.x,
+                y: state.player.y,
+                size: config.cursorSize*.8,
+                opacity: 1,
+                decay: .05
+            });
+        }
         state.trailParticles=state.trailParticles.filter(p=>p.opacity>0);
-        if (state.frame%config.ballSpawnInterval==0){
+        if (state.frame % config.ballSpawnInterval==0&&state.balls.length<config.maxBalls){
             spawnBall();
+        }
+        const now=Date.now();
+        state.collectedElements=state.collectedElements.filter(e=>now-e.timestamp<config.reactionWindow);
+        if (state.player.aura&&now-state.player.auraTimestamp>config.reactionWindow){
+            state.player.aura=null;
         }
         state.frame++;
     }
@@ -187,7 +364,20 @@ $(document).ready(function(){
         ctx.fillStyle="#FFF";
         ctx.font="16px 'EB Garamond'";
         ctx.fillText(`Speed: ${state.player.forwardSpeed.toFixed(2)}`, 220, 30);
-        ctx.fillText(`Max:   ${state.player.maxSpeed.toFixed(2)}`, 220, 50);
+        ctx.fillText(`Max: ${state.player.maxSpeed.toFixed(2)}`, 220, 50);
+        ctx.fillText(`Score: ${state.score}`, 220, 70);
+        if (state.lastReactionMessage.text){
+            ctx.globalAlpha=state.lastReactionMessage.opacity;
+            ctx.fillStyle="#FFD700";
+            ctx.font="20px 'EB Garamond'";
+            ctx.fillText(state.lastReactionMessage.text, config.width/2-50, config.height/2);
+            state.lastReactionMessage.opacity-=state.lastReactionMessage.decay;
+            if (state.lastReactionMessage.opacity<=0){
+                state.lastReactionMessage.text="";
+                state.lastReactionMessage.opacity=1;
+            }
+            ctx.globalAlpha=1;
+        }
     }
     function loop(){
         update();
@@ -197,23 +387,96 @@ $(document).ready(function(){
     function renderBalls(){
         state.balls.forEach(b=>{
             ctx.beginPath();
-            ctx.arc(b.x, b.y, b.r, 0, Math.PI*2.22);
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI*2.2);
             ctx.fillStyle=b.color;
             ctx.fill();
         });
     }
     function spawnBall(){
         let r=Math.random()*(config.ballMaxRadius-config.ballMinRadius)+config.ballMinRadius;
+        let element=state.elements[Math.floor(Math.random()*state.elements.length)];
         state.balls.push({
             x: config.width+r,
             y: Math.random()*(config.height-2*r)+r,
             r,
-            color: `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, "0")}`
+            color: element.color,
+            element: element.name
         });
     }
     function updateBalls(dx){
         state.balls.forEach(b=>b.x-=dx);
-        state.balls=state.balls.filter(b=>b.x+b.r>0);
+        state.balls=state.balls.filter(b=>{
+            let dx=state.player.x-b.x;
+            let dy=state.player.y-b.y;
+            let distance=Math.sqrt(dx*dx+dy*dy);
+            if (distance<b.r+config.planeSize){
+                playCollectionSound();
+                let basePoints=Math.floor(b.r*10);
+                state.score+=basePoints;
+                checkReactions(b.element, basePoints);
+                return false;
+            }
+            return b.x+b.r>0;
+        });
+    }
+    function checkReactions(newElement, basePoints){
+        const now=Date.now();
+        let reactionTriggered=false;
+        let auraConsumed=false;
+        if (state.player.aura){
+            for (let reaction of state.reactions){
+                let [elem1, elem2]=reaction.elements;
+                if ((state.player.aura==elem1&&newElement==elem2)||(state.player.aura==elem2&&newElement==elem1)){
+                    let bonusPoints=0;
+                    if (reaction.type=="amplifying"){
+                        bonusPoints=Math.floor(basePoints*(reaction.multiplier-1));
+                    }
+                    else if (reaction.type=="transformative"||reaction.type=="catalyze"){
+                        bonusPoints=reaction.bonus;
+                    }
+                    else if (reaction.type=="status"){
+                        bonusPoints=reaction.bonus;
+                        state.player.aura="Frozen";
+                        state.player.auraTimestamp=now;
+                        auraConsumed=false;
+                    }
+                    state.score+=bonusPoints;
+                    state.lastReactionMessage.text=`${reaction.name}!+${bonusPoints}`;
+                    state.lastReactionMessage.opacity=1;
+                    playReactionSound(reaction.name);
+                    reactionTriggered=true;
+                    if (reaction.type!=="status"){
+                        auraConsumed=true;
+                    }
+                    break;
+                }
+            }
+        }
+        if (!reactionTriggered){
+            let validElements=state.collectedElements.concat({ name: newElement, timestamp: now });
+            for (let reaction of state.reactions){
+                let [elem1, elem2]=reaction.elements;
+                if ((elem2=="Bloom"||elem2=="Quicken")&&validElements.some(e=>e.name==elem2)&&newElement==elem1){
+                    let bonusPoints=reaction.bonus;
+                    state.score+=bonusPoints;
+                    state.lastReactionMessage.text=`${reaction.name}!+${bonusPoints}`;
+                    state.lastReactionMessage.opacity=1;
+                    playReactionSound(reaction.name);
+                    let idx=validElements.findIndex(e=>e.name==elem2);
+                    if (idx>=0) validElements.splice(idx, 1);
+                    reactionTriggered=true;
+                    break;
+                }
+            }
+            state.collectedElements=validElements.filter(e=>now-e.timestamp<config.reactionWindow);
+        }
+        if (!reactionTriggered&&(!state.player.aura||auraConsumed)){
+            state.player.aura=newElement;
+            state.player.auraTimestamp=now;
+        }
+        else if (auraConsumed){
+            state.player.aura=null;
+        }
     }
     function renderGoldenAceCursor(){
         ctx.save();
@@ -225,20 +488,20 @@ $(document).ready(function(){
         gradient.addColorStop(1, config.cursorGradient[1]);
         ctx.fillStyle=gradient;
         ctx.beginPath();
-        ctx.arc(0, 0, config.cursorSize+config.cursorGlowRadius, 0, Math.PI*2);
+        ctx.arc(0, 0, config.cursorSize+config.cursorGlowRadius, 0, Math.PI*2.2);
         ctx.fill();
         let innerGradient=ctx.createRadialGradient(0, 0, 0, 0, 0, config.cursorSize);
         innerGradient.addColorStop(0, config.cursorGradient[0]);
         innerGradient.addColorStop(1, config.cursorGradient[1]);
         ctx.fillStyle=innerGradient;
         ctx.beginPath();
-        ctx.arc(0, 0, config.cursorSize, 0, Math.PI*2);
+        ctx.arc(0, 0, config.cursorSize, 0, Math.PI*2.2);
         ctx.fill();
         ctx.strokeStyle="#000000";
         ctx.lineWidth=2;
         ctx.beginPath();
         ctx.moveTo(-config.cursorSize/2, 0);
-        ctx.lineTo(0, -config.cursorSize/2);
+        ctx.lineTo(0,-config.cursorSize/2);
         ctx.lineTo(config.cursorSize/2, 0);
         ctx.lineTo(0, config.cursorSize/2);
         ctx.closePath();
