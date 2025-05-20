@@ -15,7 +15,7 @@
             }
             @font-face{
                 font-family: "Noto Sans";
-                src: url("NotoSans-VariableFont_wdth\,wght.ttf");
+                src: url("NotoSans-VariableFont_wdth_wght.ttf");
                 font-weight: 1 1000;
                 font-display: swap;
             }
@@ -31,115 +31,100 @@
                 font-family: "Noto Sans", sans-serif;
                 background-color: #000;
                 color: #FFF;
+                font-size: clamp(14px, 2.7vw, 16px);
+                touch-action: none;
                 overflow-x: hidden;
                 overflow-y: scroll;
             }
             #page-title{
                 font-family: "Noto Sans", sans-serif;
                 margin: 0;
-                padding: 20px 0;
+                padding: clamp(1rem, 2.2vh, 1.5rem) 0;
                 text-align: center;
                 background-color: var(--primary-color);
-                font-size: 2.5rem;
+                font-size: clamp(1.5rem, 4.8vw, 2rem);
                 color: #FFF;
-                width: 100%;
+                width: 100vw;
             }
             #game-container{
                 font-family: "Noto Sans", sans-serif;
                 display: flex;
                 justify-content: center;
                 background-color: #000;
-                height: calc(100vh - 150px);
+                height: calc(100vh - clamp(4rem, 10vh, 6rem) - env(safe-area-inset-top, 0) - env(safe-area-inset-bottom, 0));
             }
             canvas{
                 font-family: "Noto Sans", sans-serif;
                 display: block;
                 margin: 0 auto;
                 background: #000;
+                width: 100vw;
+                height: 100%;
             }
             footer{
                 font-family: "EB Garamond";
-                font-size: 1.1rem;
+                width: 100vw;
                 color: #FFF;
                 background-color: var(--primary-color);
                 text-align: center;
-                padding: 1rem 0;
+                font-size: clamp(.8rem, 2.7vw, 1rem);
+                bottom: env(safe-area-inset-bottom, 0);
+                padding: clamp(.5rem, 1vh, 1rem) env(safe-area-inset-left, 0) clamp(.5rem, 1vh, 1rem) env(safe-area-inset-right, 0);
                 position: fixed;
-                bottom: 0;
-                width: 100%;
                 z-index: 1002;
             }
-            #controls {
+            #controls{
                 font-family: "EB Garamond";
                 position: fixed;
-                top: 150px;
-                left: 20px;
-                background: rgba(0, 0, 0, 0.7);
-                padding: 15px;
-                border-radius: 8px;
+                top: calc(clamp(6rem, 15vh, 8rem) + env(safe-area-inset-top, 0));
+                left: calc(clamp(.5rem, 2vw, 1rem) + env(safe-area-inset-left, 0));
+                background: rgba(0, 0, 0, .7);
+                padding: clamp(.5rem, 2vw, 1rem);
+                border-radius: clamp(.4rem, 1vw, .5rem);
                 border: 1px solid var(--accent-color);
+                max-width: clamp(10rem, 24.8vw, 15rem);
                 z-index: 1001;
-                max-width: 250px;
             }
             #controls h3{
                 font-family: "EB Garamond";
                 margin-top: 0;
                 color: var(--accent-color);
+                font-size: clamp(.9rem, 2.7vw, 1.2rem);
             }
             #controls p{
                 font-family: "EB Garamond";
-                margin: 5px 0;
+                margin: clamp(.2rem, .5vh, .3rem) 0;
+                font-size: clamp(.7rem, 2vw, .9rem);
             }
-            @media (max-width: 1400px){
-                #controls{
-                    font-size: .6rem;
-                }
-                #touch-controls{
-                    display: flex;
-                    position: fixed;
-                    bottom: calc(env(safe-area-inset-bottom, 0)+60px);
-                    left: 0;
-                    right: 0;
-                    justify-content: space-around;
-                    background: rgba(0,0,0,.7);
-                    padding: 10px 0;
-                    z-index: 1003;
-                }
-                #touch-controls button {
-                    flex: 1;
-                    margin: 0 5px;
-                    padding: 12px 0;
-                    font-size: 1.2rem;
-                    border-radius: 8px;
-                    background: var(--accent-color);
-                    color: #fff;
-                }
-                h1#page-title{
-                    font-size: 1rem;
-                    padding: 10px 0;
-                }
-                footer{
-                    z-index: 1002;
-                }
-                footer p{
-                    font-size: 1rem;
-                }
-                .modal-content{
-                    max-width: 90%;
-                    padding: 10px;
-                }
-                .modal-content button{
-                    font-size: 1.1rem;
-                    padding: 7px;
-                }
+            #touch-controls{
+                display: flex;
+                position: fixed;
+                bottom: calc(clamp(2rem, 5vh, 3rem) + env(safe-area-inset-bottom, 0));
+                left: env(safe-area-inset-left, 0);
+                right: env(safe-area-inset-right, 0);
+                justify-content: space-around;
+                background: rgba(0, 0, 0, .7);
+                padding: clamp(.5rem, 1vh, .75rem) env(safe-area-inset-left, 0) clamp(.5rem, 1vh, .75rem) env(safe-area-inset-right, 0);
+                z-index: 1003;
+            }
+            #touch-controls button{
+                flex: 1;
+                margin: 0 clamp(.2rem, 1vw, .3rem);
+                padding: clamp(.6rem, 2.2vh, .8rem) 0;
+                font-size: clamp(.9rem, 2.7vw, 1.2rem);
+                border-radius: clamp(.4rem, 1vw, .5rem);
+                background: var(--accent-color);
+                color: #FFF;
+                min-width: clamp(2.7rem, 10vw, 3rem);
+                min-height: clamp(2.7rem, 10vw, 3rem);
             }
             .modal{
                 display: flex;
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100%;
-                height: 100%;
+                width: 100vw;
+                height: 100vh;
                 background: rgba(0, 0, 0, .9);
                 justify-content: center;
                 align-items: center;
@@ -147,26 +132,27 @@
             }
             .modal-content{
                 background: var(--primary-color);
-                padding: 30px;
-                border-radius: 10px;
+                padding: clamp(1rem, 2.7vw, 1.5rem);
+                border-radius: clamp(.5rem, 1.4vw, .75rem);
                 border: 2px solid var(--accent-color);
-                max-width: 500px;
+                max-width: clamp(15rem, 80vw, 25rem);
                 text-align: left;
             }
             .modal-content h2{
                 color: var(--accent-color);
                 margin-top: 0;
                 font-family: "EB Garamond";
+                font-size: clamp(1.2rem, 4vw, 1.5rem);
             }
             #startButton, #restartButton{
                 background: var(--accent-color);
                 color: white;
                 border: none;
-                padding: 12px 24px;
-                border-radius: 5px;
+                padding: clamp(.6rem, 2.2vh, .8rem) clamp(1rem, 2.7vw, 1.5rem);
+                border-radius: clamp(.3rem, 1vw, .4rem);
                 cursor: pointer;
-                font-size: 1.2em;
-                margin-top: 20px;
+                font-size: clamp(.9rem, 2.7vw, 1.2rem);
+                margin-top: clamp(.8rem, 2.2vh, 1rem);
                 width: 100%;
                 transition: opacity .3s;
             }
@@ -174,11 +160,12 @@
                 opacity: .8;
             }
             .modal-content ul{
-                padding-left: 20px;
+                padding-left: clamp(.8rem, 2vw, 1rem);
             }
             .modal-content li{
-                margin: 10px 0;
                 font-family: "EB Garamond";
+                font-size: clamp(.8rem, 2.7vw, 1rem);
+                margin: clamp(.3rem, 1vh, .5rem) 0;
             }
             input{
                 font-family: "EB Garamond";
@@ -190,20 +177,109 @@
             header{
                 position: relative;
                 width: 100vw;
-                left: 50%;
-                right: 50%;
-                margin-left: -50vw;
-                margin-right: -50vw;
+                margin: 0 auto;
             }
             .notice{
                 font-family: "EB Garamond";
                 margin: auto;
                 text-align: center;
-                background-color: #28465C;
+                background-color: var(--primary-color);
                 color: #FFF;
+                font-size: clamp(.7rem, 2vw, .9rem);
+                padding: clamp(.3rem, 1vh, .5rem) 0;
             }
             a{
-                color: #1C94E9;
+                color: var(--accent-color);
+            }
+            @media (max-width: 768px){
+                #page-title{
+                    font-size: clamp(1rem, 4vw, 1.5rem);
+                    padding: clamp(.5rem, 1.5vh, .8rem) 0;
+                }
+                #controls{
+                    font-size: clamp(.6rem, 1.8vw, .8rem);
+                    padding: clamp(.4rem, 1.4vw, .6rem);
+                    max-width: clamp(8rem, 20vw, 12rem);
+                    top: calc(clamp(4rem, 12.2vh, 6rem) + env(safe-area-inset-top, 0));
+                    left: calc(clamp(.3rem, 1vw, .5rem) + env(safe-area-inset-left, 0));
+                }
+                #touch-controls{
+                    bottom: calc(clamp(1.5rem, 4vh, 2.7rem) + env(safe-area-inset-bottom, 0));
+                    padding: clamp(.4rem, 1vh, .6rem) env(safe-area-inset-left, 0) clamp(.4rem, 1vh, .6rem) env(safe-area-inset-right, 0);
+                }
+                #touch-controls button{
+                    font-size: clamp(.8rem, 2.7vw, 1rem);
+                    padding: clamp(.5rem, 1.5vh, .7rem) 0;
+                    min-width: clamp(2rem, 8vw, 2.7rem);
+                    min-height: clamp(2rem, 8vw, 2.7rem);
+                }
+                footer{
+                    font-size: clamp(.7rem, 2vw, .9rem);
+                    padding: clamp(.3rem, .8vh, .5rem) env(safe-area-inset-left, 0) clamp(.3rem, .8vh, .5rem) env(safe-area-inset-right, 0);
+                }
+                .modal-content{
+                    max-width: clamp(12rem, 84.8vw, 20rem);
+                    padding: clamp(.6rem, 2vw, 1rem);
+                }
+                .modal-content h2{
+                    font-size: clamp(1rem, 3.8vw, 1.2rem);
+                }
+                .modal-content button{
+                    font-size: clamp(.8rem, 2.7vw, 1rem);
+                    padding: clamp(.5rem, 1.5vh, .7rem) clamp(.8rem, 2vw, 1rem);
+                }
+                .modal-content li{
+                    font-size: clamp(.7rem, 2vw, .9rem);
+                }
+                .notice{
+                    font-size: clamp(.6rem, 1.8vw, .8rem);
+                    padding: clamp(.2rem, .8vh, .4rem) 0;
+                }
+            }
+            @media (max-width: 480px){
+                #page-title{
+                    font-size: clamp(.8rem, 3.8vw, 1.2rem);
+                    padding: clamp(.3rem, 1vh, .5rem) 0;
+                }
+                #controls{
+                    font-size: clamp(.5rem, 1.4vw, .7rem);
+                    max-width: clamp(6rem, 18vw, 10rem);
+                    padding: clamp(.3rem, 1vw, .5rem);
+                    top: calc(clamp(3rem, 10vh, 5rem) + env(safe-area-inset-top, 0));
+                    left: calc(clamp(.2rem, .8vw, .4rem) + env(safe-area-inset-left, 0));
+                }
+                #touch-controls{
+                    bottom: calc(clamp(1rem, 3vh, 2rem) + env(safe-area-inset-bottom, 0));
+                    padding: clamp(.3rem, .8vh, .5rem) env(safe-area-inset-left, 0) clamp(.3rem, .8vh, .5rem) env(safe-area-inset-right, 0);
+                }
+                #touch-controls button{
+                    font-size: clamp(.7rem, 2vw, .9rem);
+                    padding: clamp(.4rem, 1vh, .6rem) 0;
+                    min-width: clamp(1.8rem, 7vw, 2.2rem);
+                    min-height: clamp(1.8rem, 7vw, 2.2rem);
+                }
+                footer{
+                    font-size: clamp(.6rem, 1.8vw, .8rem);
+                    padding: clamp(.2rem, .6vh, .4rem) env(safe-area-inset-left, 0) clamp(.2rem, .6vh, .4rem) env(safe-area-inset-right, 0);
+                }
+                .modal-content{
+                    max-width: clamp(10rem, 90vw, 18rem);
+                    padding: clamp(.5rem, 1.4vw, .8rem);
+                }
+                .modal-content h2{
+                    font-size: clamp(.8rem, 2.7vw, 1rem);
+                }
+                .modal-content button{
+                    font-size: clamp(.7rem, 2vw, .9rem);
+                    padding: clamp(.4rem, 1vh, .6rem) clamp(.6rem, 1.4vw, .8rem);
+                }
+                .modal-content li{
+                    font-size: clamp(.6rem, 1.8vw, .8rem);
+                }
+                .notice{
+                    font-size: clamp(.5rem, 1.4vw, .7rem);
+                    padding: clamp(.1rem, .6vh, .3rem) 0;
+                }
             }
         </style>
     </head>
@@ -219,8 +295,8 @@
         </div>
         <div id="controls">
             <h3>Controls</h3>
-            <p>w/s/▲/▼: Move along y-axis</p>
-            <p>-/a: Decrease Max Speed</p>
+            <p>w/s/▲/▼/swipe up/swipe down: Move along y-axis</p>
+            <p>-/a/: Decrease Max Speed</p>
             <p>=/+/d : Increase Max Speed</p>
             <h3>Statistics</h3>
             <p id="cursor-speed">Speed: </p>
