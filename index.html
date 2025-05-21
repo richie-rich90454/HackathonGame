@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Lost Realms</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="Lost Realms is an immersive fantasy game where players collect elemental orbs to perform reactions and score points. Explore a setting with wonder with intuitive controls and engaging gameplay.">
+        <meta name="keywords" content="Lost Realms, fantasy game, elemental orbs, Journey game, web game, interactive game, Richard's Blogs">
+        <meta name="author" content="Richard's Blogs">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://lostrealms.richardsblogs.com">
+        <meta property="og:title" content="Lost Realms - A Wonder and Fantasy Game">
+        <meta property="og:description" content="Join the Journey in Lost Realms, a fantasy game where you collect elemental orbs and perform reactions to score points. Play now on Richard's Blogs!">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://lostrealms.richardsblogs.com">
+        <meta property="og:image" content="https://lostrealms.richardsblogs.com/favicon.ico">
+        <meta property="og:site_name" content="Richard's Blogs">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Lost Realms - A Wonder and Fantasy Game">
+        <meta name="twitter:description" content="Join the Journey in Lost Realms, a fantasy game where you collect elemental orbs and perform reactions to score points. Play now!">
+        <meta name="twitter:image" content="https://lostrealms.richardsblogs.com/favicon.ico">
+        <meta name="twitter:site" content="@RichardsBlogs">
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" href="/favicon.ico">
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "VideoGame",
+                "name": "Lost Realms",
+                "description": "Lost Realms is an immersive fantasy web game where players collect elemental orbs to perform reactions and score points in a setting with wonder.",
+                "url": "https://lostrealms.richardsblogs.com",
+                "publisher":{
+                    "@type": "Organization",
+                    "name": "Richard's Blogs",
+                    "url": "https://www.richardsblogs.com"
+                },
+                "gamePlatform": ["Web"],
+                "genre": ["Fantasy", "Wonder"],
+                "inLanguage": "en",
+                "author":{
+                    "@type": "Person",
+                    "name": "Richard"
+                },
+                "datePublished": "2025-05-21",
+                "image": "https://lostrealms.richardsblogs.com/favicon.ico"
+            }
+        </script>
         <script src="jquery-3.7.1.js"></script>
         <script src="Tone.js"></script>
         <script src="Midi.js"></script>
@@ -328,7 +368,7 @@
         </header>
         <main>
         <div id="game-container">
-            <canvas id="gameCanvas"></canvas>
+            <canvas id="gameCanvas" aria-label="Lost Realms game canvas"></canvas>
         </div>
         <div id="controls">
             <h3>Controls</h3>
@@ -341,18 +381,19 @@
             <p id="cursor-score">Score: </p>
         </div>
         </main>
-        <footer></footer>
+        <footer aria-label="Footer"></footer>
         <div id="controls-toggle">
-            <button id="toggleControlsBtn">Show Controls</button>
+            <button id="toggleControlsBtn" aria-label="Toggle game controls">Show Controls</button>
         </div>
-        <div id="touch-controls">
-            <button id="upBtn">▲</button>
-            <button id="downBtn">▼</button>
-            <button id="slowerBtn">-</button>
-            <button id="fasterBtn">+</button>
+        <div id="touch-controls" role="region" aria-label="Touch controls">
+            <button id="upBtn" aria-label="Move up">▲</button>
+            <button id="downBtn" aria-label="Move down">▼</button>
+            <button id="slowerBtn" aria-label="Decrease speed">-</button>
+            <button id="fasterBtn" aria-label="Increase speed">+</button>
         </div>
-        <div id="startModal" class="modal">
+        <div id="startModal" class="modal" role="dialog" aria-labelledby="startModalTitle">
             <div class="modal-content">
+                <h2 id="startModalTitle" style="text-align: center;">Welcome to Lost Realms!</h2>
                 <p>Collect elemental orbs to perform reactions and score points!</p>
                 <p>Rules and a guide to the game: <a href="/rules.html" target="_blank">Rules</a></p>
                 <ul>
@@ -360,12 +401,12 @@
                     <li>Use +/- or A/D to adjust speed</li>
                     <li>Combine elements for reaction bonuses</li>
                 </ul>
-                <button id="startButton">Begin Adventure</button>
+                <button id="startButton" aria-label="Begin the Journey">Begin the Journey with Wonder!</button>
             </div>
         </div>
-        <div id="endModal" class="modal" style="display: none;">
+        <div id="endModal" class="modal" style="display: none;" role="dialog" aria-labelledby="endModalTitle">
             <div class="modal-content">
-                <h2>Adventure Complete!</h2>
+                <h2 id="endModalTitle">Journey Complete!</h2>
                 <p>Congratulations! You have reached 10,000 points!</p>
                 <h3>Game Metrics</h3>
                 <p id="total-score"></p>
@@ -373,7 +414,7 @@
                 <p id="max-speed-used">Maximum Speed: </p>
                 <h3>Reactions Performed</h3>
                 <ul id="reaction-list"></ul>
-                <button id="restartButton">Play Again</button>
+                <button id="restartButton" aria-label="Play again">Play Again</button>
             </div>
         </div>
         <script src="script.js"></script>
