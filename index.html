@@ -99,24 +99,29 @@
             #touch-controls{
                 display: none;
                 position: fixed;
-                bottom: calc(clamp(2rem, 5vh, 3rem) + env(safe-area-inset-bottom, 0));
-                left: env(safe-area-inset-left, 0);
-                right: env(safe-area-inset-right, 0);
-                justify-content: space-around;
+                bottom: calc(2rem + env(safe-area-inset-bottom, 0));
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: clamp(.5rem, 2vw, 1rem);
                 background: rgba(0, 0, 0, .7);
-                padding: clamp(.5rem, 1vh, .75rem) env(safe-area-inset-left, 0) clamp(.5rem, 1vh, .75rem) env(safe-area-inset-right, 0);
+                padding: clamp(.5rem, 1vh, .75rem);
+                border-radius: clamp(.4rem, 1vw, .5rem);
                 z-index: 1003;
             }
             #touch-controls button{
-                flex: 1;
-                margin: 0 clamp(.2rem, 1vw, .3rem);
-                padding: clamp(.6rem, 2.2vh, .8rem) 0;
-                font-size: clamp(.9rem, 2.7vw, 1.2rem);
-                border-radius: clamp(.4rem, 1vw, .5rem);
+                flex: none;
+                width: clamp(3rem, 8vw, 4rem);
+                height: clamp(3rem, 8vw, 4rem);
+                font-size: clamp(1rem, 3vw, 1.3rem);
+                border-radius: 50%;
                 background: var(--accent-color);
                 color: #FFF;
-                min-width: clamp(2.7rem, 10vw, 3rem);
-                min-height: clamp(2.7rem, 10vw, 3rem);
+                transition: transform .2s;
+                border: none;
+            }
+            #touch-controls button:hover{
+                transform: scale(1.1);
             }
             .modal{
                 display: flex;
@@ -289,6 +294,28 @@
             button:hover{
                 transform: scale(1.05);
             }
+            #controls-toggle{
+                position: fixed;
+                bottom: calc(6rem + env(safe-area-inset-bottom, 0));
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1004;
+                opacity: .1;
+                transition: all .5s ease-in-out;
+            }
+            #controls-toggle:hover{
+                opacity: .8;
+            }
+            #controls-toggle button{
+                background: var(--accent-color);
+                color: #fff;
+                border: none;
+                padding: .5rem 1rem;
+                border-radius: .4rem;
+                font-size: clamp(.8rem, 2.5vw, 1rem);
+                cursor: pointer;
+                transition: opacity .3s;
+            }
         </style>
     </head>
     <body>
@@ -314,6 +341,9 @@
         </div>
         </main>
         <footer></footer>
+        <div id="controls-toggle">
+            <button id="toggleControlsBtn">Show Controls</button>
+        </div>
         <div id="touch-controls">
             <button id="upBtn">▲</button>
             <button id="downBtn">▼</button>

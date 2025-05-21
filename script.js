@@ -540,14 +540,18 @@ $(document).ready(function(){
         if (!btn){
             return;
         }
-        btn.addEventListener("touchstart", e=>{
+        btn.addEventListener("pointerdown", e=>{
             e.preventDefault();
             state.keys[ctrl]=true;
         },{passive:false});
-        btn.addEventListener("touchend", e=>{
+        btn.addEventListener("pointerup", e=>{
             e.preventDefault();
             state.keys[ctrl]=false;
         },{passive:false});
+        btn.addEventListener("pointerleave", e=>{
+        e.preventDefault();
+        state.keys[ctrl]=false;
+        }, { passive: false });
     });
     canvas.addEventListener("touchmove", e=>{
         let t=e.touches[0];
@@ -559,5 +563,15 @@ $(document).ready(function(){
     },{passive:false});
     canvas.addEventListener("touchend", ()=>{
         state.keys.up=state.keys.down=false;
+    });
+    let touchControls=$("#touch-controls");
+    let touchControlsToggleBtn=$("#toggleControlsBtn");
+    touchControls.hide();
+    let istouchControlsVisible=false;
+    touchControlsToggleBtn.text("Show Controls");
+    touchControlsToggleBtn.on("click", function(){
+        istouchControlsVisible=!istouchControlsVisible;
+        touchControls.slideToggle(200);
+        touchControlsToggleBtn.text(istouchControlsVisible?"Hide Controls":"Show Controls");
     });
 });
