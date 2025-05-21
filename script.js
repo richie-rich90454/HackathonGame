@@ -5,7 +5,7 @@ $(document).ready(function(){
         width: window.innerWidth,
         height: window.innerHeight,
         skyGradient: ["#000044", "#88CCFF"],
-        planeColor: "#FFFFFF",
+        planeColor: "#FFF",
         planeSize: 33.5,
         terrainSegmentWidth: 10,
         terrainMaxDelta: 40,
@@ -43,47 +43,9 @@ $(document).ready(function(){
         trailParticles:[],
         score: 0,
         collectedElements: [],
-        elements:[
-         {name: "Pyro", color: "#FF4444"},
-         {name: "Hydro", color: "#44AAFF"},
-         {name: "Electro", color: "#AA44FF"},
-         {name: "Dendro", color: "#88CC44"},
-         {name: "Cryo", color: "#44FFFF"},
-         {name: "Geo", color: "#FFAA44"},
-         {name: "Anemo", color: "#44FFAA"}
-        ],
-        reactions:[
-         {elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying"},
-         {elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying"},
-         {elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying"},
-         {elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying"},
-         {elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 175, type: "transformative"},
-         {elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"},
-         {elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 60, type: "transformative"},
-         {elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"},
-         {elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
-         {elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"},
-         {elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative"},
-         {elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative"},
-         {elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative"},
-         {elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative"},
-         {elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 40, type: "transformative"},
-         {elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 40, type: "transformative"},
-         {elements: ["Geo", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"},
-         {elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 40, type: "transformative"},
-         {elements: ["Pyro", "Dendro"], name: "Burning", bonus: 60, type: "transformative"},
-         {elements: ["Dendro", "Pyro"], name: "Burning", bonus: 60, type: "transformative"},
-         {elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status"},
-         {elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status"},
-         {elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 70, type: "transformative"},
-         {elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 70, type: "transformative"},
-         {elements: ["Dendro", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"},
-         {elements: ["Electro", "Dendro"], name: "Quicken", bonus: 60, type: "catalyze"},
-         {elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"},
-         {elements: ["Dendro", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
-         {elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 120, type: "transformative"},
-         {elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}
-        ],
+        elements:[{name: "Pyro", color: "#DE0000"}, {name: "Hydro", color: "#1B79B3"}, {name: "Electro", color: "#7C4DD9"}, {name: "Dendro", color: "#859B3A"}, {name: "Cryo", color: "#59CFDA"}, {name: "Geo", color: "#FFAA44"}, {name: "Anemo", color: "#A38C31"}],
+        reactions:[{elements: ["Pyro", "Hydro"], name: "Vaporize", multiplier: 2, type: "amplifying"}, {elements: ["Hydro", "Pyro"], name: "Vaporize", multiplier: 1.5, type: "amplifying"}, {elements: ["Pyro", "Cryo"], name: "Melt", multiplier: 2, type: "amplifying"}, {elements: ["Cryo", "Pyro"], name: "Melt", multiplier: 1.5, type: "amplifying"}, {elements: ["Electro", "Pyro"], name: "Overloaded", bonus: 175, type: "transformative"}, {elements: ["Pyro", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"}, {elements: ["Electro", "Cryo"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Cryo", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Electro", "Hydro"], name: "Electro-Charged", bonus: 90, type: "transformative"}, {elements: ["Hydro", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"}, {elements: ["Anemo", "Pyro"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Anemo", "Hydro"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Anemo", "Electro"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Anemo", "Cryo"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Geo", "Pyro"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Geo", "Hydro"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Geo", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Geo", "Cryo"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Pyro", "Dendro"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Dendro", "Pyro"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Hydro", "Cryo"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Cryo", "Hydro"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Hydro", "Dendro"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Dendro", "Hydro"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Dendro", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Electro", "Dendro"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"}, {elements: ["Dendro", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"}, {elements: ["Pyro", "Bloom"], name: "Burgeon", bonus: 120, type: "transformative"},
+        {elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}],
         lastReactionMessage:{text: "", opacity: 1, decay: .01},
         synth: null,
         lastSoundTime: 0,
@@ -166,7 +128,7 @@ $(document).ready(function(){
         ctx.fillRect(0, 0, config.width, config.height);
     }
     function renderTerrain(){
-        ctx.fillStyle="#224422";
+        ctx.fillStyle="#225528";
         ctx.beginPath();
         ctx.moveTo(0, config.height);
         for (let p of state.terrain){
@@ -528,7 +490,7 @@ $(document).ready(function(){
         let angle=Math.atan2(state.player.verticalVelocity, state.player.forwardSpeed);
         ctx.rotate(angle);
         let gradient=ctx.createRadialGradient(0, 0, 0, 0, 0, config.cursorSize+config.cursorGlowRadius);
-        gradient.addColorStop(0, "#FFFFFF");
+        gradient.addColorStop(0, "#FFF");
         gradient.addColorStop(1, config.cursorGradient[1]);
         ctx.fillStyle=gradient;
         ctx.beginPath();
@@ -541,7 +503,7 @@ $(document).ready(function(){
         ctx.beginPath();
         ctx.arc(0, 0, config.cursorSize, 0, Math.PI*2);
         ctx.fill();
-        ctx.strokeStyle="#000000";
+        ctx.strokeStyle="#000";
         ctx.lineWidth=2;
         ctx.beginPath();
         ctx.moveTo(-config.cursorSize/2, 0);
