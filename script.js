@@ -26,13 +26,13 @@ $(document).ready(function(){
         player:{
             x: config.width/4,
             y: config.height/2,
-            forwardSpeed: 2,
+            forwardSpeed: 2.1,
             acceleration: .01,
             maxSpeed: 8,
             verticalVelocity: 0,
-            verticalAcceleration: .2,
+            verticalAcceleration: .25,
             maxVerticalSpeed: 5,
-            friction: .9,
+            friction: .85,
             aura: null,
             auraTimestamp: 0
         },
