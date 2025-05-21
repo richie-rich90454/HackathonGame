@@ -43,10 +43,10 @@ $(document).ready(function(){
         trailParticles:[],
         score: 0,
         collectedElements: [],
-        elements:[{name: "Feuer", color: "#DE0000"}, {name: "Wasser", color: "#1B79B3"}, {name: "Electro", color: "#7C4DD9"}, {name: "Rasen", color: "#859B3A"}, {name: "Entspannen", color: "#59CFDA"}, {name: "Gestein", color: "#FFAA44"}, {name: "Luft", color: "#A38C31"}],
-        reactions:[{elements: ["Feuer", "Wasser"], name: "Vaporize", multiplier: 2, type: "amplifying"}, {elements: ["Wasser", "Feuer"], name: "Vaporize", multiplier: 1.5, type: "amplifying"}, {elements: ["Feuer", "Entspannen"], name: "Melt", multiplier: 2, type: "amplifying"}, {elements: ["Entspannen", "Feuer"], name: "Melt", multiplier: 1.5, type: "amplifying"}, {elements: ["Electro", "Feuer"], name: "Overloaded", bonus: 175, type: "transformative"}, {elements: ["Feuer", "Electro"], name: "Overloaded", bonus: 175, type: "transformative"}, {elements: ["Electro", "Entspannen"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Entspannen", "Electro"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Electro", "Wasser"], name: "Electro-Charged", bonus: 90, type: "transformative"}, {elements: ["Wasser", "Electro"], name: "Electro-Charged", bonus: 90, type: "transformative"}, {elements: ["Luft", "Feuer"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Wasser"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Electro"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Entspannen"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Gestein", "Feuer"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Wasser"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Electro"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Entspannen"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Feuer", "Rasen"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Rasen", "Feuer"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Wasser", "Entspannen"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Entspannen", "Wasser"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Wasser", "Rasen"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Wasser"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Electro"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Electro", "Rasen"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Electro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"}, {elements: ["Rasen", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
+        elements:[{name: "Feuer", color: "#DE0000"}, {name: "Wasser", color: "#1B79B3"}, {name: "Elektro", color: "#7C4DD9"}, {name: "Rasen", color: "#859B3A"}, {name: "Kryo", color: "#59CFDA"}, {name: "Gestein", color: "#FFAA44"}, {name: "Luft", color: "#A38C31"}],
+        reactions:[{elements: ["Feuer", "Wasser"], name: "Vaporize", multiplier: 2, type: "amplifying"}, {elements: ["Wasser", "Feuer"], name: "Vaporize", multiplier: 1.5, type: "amplifying"}, {elements: ["Feuer", "Kryo"], name: "Melt", multiplier: 2, type: "amplifying"}, {elements: ["Kryo", "Feuer"], name: "Melt", multiplier: 1.5, type: "amplifying"}, {elements: ["Elektro", "Feuer"], name: "Overload", bonus: 175, type: "transformative"}, {elements: ["Feuer", "Elektro"], name: "Overload", bonus: 175, type: "transformative"}, {elements: ["Elektro", "Kryo"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Kryo", "Elektro"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Elektro", "Wasser"], name: "Elektro-Charge", bonus: 90, type: "transformative"}, {elements: ["Wasser", "Elektro"], name: "Elektro-Charge", bonus: 90, type: "transformative"}, {elements: ["Luft", "Feuer"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Wasser"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Elektro"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Kryo"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Gestein", "Feuer"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Wasser"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Elektro"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Kryo"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Feuer", "Rasen"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Rasen", "Feuer"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Wasser", "Kryo"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Kryo", "Wasser"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Wasser", "Rasen"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Wasser"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Elektro"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Elektro", "Rasen"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Elektro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"}, {elements: ["Rasen", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
         {elements: ["Feuer", "Bloom"], name: "BurGesteinn", bonus: 120, type: "transformative"},
-        {elements: ["Electro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}],
+        {elements: ["Elektro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}],
         lastReactionMessage:{text: "", opacity: 1, decay: .01},
         synth: null,
         lastSoundTime: 0,
@@ -58,7 +58,7 @@ $(document).ready(function(){
     let canvas=document.getElementById("gameCanvas");
     let ctx=canvas.getContext("2d");
     if (!ctx){
-        console.error("Canvas context not supported");
+        console.error("Canvas error, refresh to try again.");
         return;
     }
     try{
@@ -226,7 +226,7 @@ $(document).ready(function(){
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("A4", "8n", Tone.now(), .5);
                 break;
-            case "Overloaded":
+            case "Overload":
                 synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("E3", "4n", Tone.now(), .5);
@@ -236,7 +236,7 @@ $(document).ready(function(){
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("F3", "8n", Tone.now(), .5);
                 break;
-            case "Electro-Charged":
+            case "Elektro-Charge":
                 synthConfig={ oscillator:{type: "pulse"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
                 state.synth.set(synthConfig);
                 state.synth.triggerAttackRelease("D4", "8n", Tone.now(), .5);
@@ -362,7 +362,7 @@ $(document).ready(function(){
             p.opacity-=p.decay;
         });
         ctx.restore();
-        renderGoldenAceCursor();
+        renderOrbCursor();
         renderReactionTimer();
         ctx.fillStyle="#FFF";
         ctx.font="16px \"EB Garamond\"";
@@ -485,7 +485,7 @@ $(document).ready(function(){
             state.player.aura=null;
         }
     }
-    function renderGoldenAceCursor(){
+    function renderOrbCursor(){
         ctx.save();
         ctx.translate(state.player.x, state.player.y);
         let angle=Math.atan2(state.player.verticalVelocity, state.player.forwardSpeed);
