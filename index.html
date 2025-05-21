@@ -97,7 +97,7 @@
                 font-size: clamp(.7rem, 2vw, .9rem);
             }
             #touch-controls{
-                display: flex;
+                display: none;
                 position: fixed;
                 bottom: calc(clamp(2rem, 5vh, 3rem) + env(safe-area-inset-bottom, 0));
                 left: env(safe-area-inset-left, 0);
@@ -204,6 +204,7 @@
                     left: calc(clamp(.3rem, 1vw, .5rem) + env(safe-area-inset-left, 0));
                 }
                 #touch-controls{
+                    display: flex;
                     bottom: calc(clamp(1.5rem, 4vh, 2.7rem) + env(safe-area-inset-bottom, 0));
                     padding: clamp(.4rem, 1vh, .6rem) env(safe-area-inset-left, 0) clamp(.4rem, 1vh, .6rem) env(safe-area-inset-right, 0);
                 }
@@ -249,6 +250,7 @@
                     left: calc(clamp(.2rem, .8vw, .4rem) + env(safe-area-inset-left, 0));
                 }
                 #touch-controls{
+                    display: flex;
                     bottom: calc(clamp(1rem, 3vh, 2rem) + env(safe-area-inset-bottom, 0));
                     padding: clamp(.3rem, .8vh, .5rem) env(safe-area-inset-left, 0) clamp(.3rem, .8vh, .5rem) env(safe-area-inset-right, 0);
                 }
