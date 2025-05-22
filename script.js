@@ -347,6 +347,7 @@ $(document).ready(function(){
         }
         $("#endModal").show();
         $("#controls-toggle").hide();
+        $("#touch-controls").hide();
     }
     function draw(){
         ctx.clearRect(0, 0, config.width, config.height);
