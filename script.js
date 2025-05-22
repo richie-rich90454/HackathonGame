@@ -1,10 +1,11 @@
 $(document).ready(function(){
     $("#startModal").show();
+    $("#controls-toggle").hide();
     let animationFrameId;
     let config={
         width: window.innerWidth,
         height: window.innerHeight,
-        skyGradient: ["#000044", "#88CCFF"],
+        skyGradient: ["#000044", "#88CCDD"],
         planeColor: "#FFF",
         planeSize: 33.5,
         terrainSegmentWidth: 10,
@@ -28,7 +29,7 @@ $(document).ready(function(){
             y: config.height/2,
             forwardSpeed: 2.1,
             acceleration: .01,
-            maxSpeed: 8,
+            maxSpeed: 12,
             verticalVelocity: 0,
             verticalAcceleration: .25,
             maxVerticalSpeed: 5,
@@ -43,10 +44,10 @@ $(document).ready(function(){
         trailParticles:[],
         score: 0,
         collectedElements: [],
-        elements:[{name: "Feuer", color: "#DE0000"}, {name: "Wasser", color: "#1B79B3"}, {name: "Elektro", color: "#7C4DD9"}, {name: "Rasen", color: "#859B3A"}, {name: "Kryo", color: "#59CFDA"}, {name: "Gestein", color: "#FFAA44"}, {name: "Luft", color: "#A38C31"}],
+        elements:[{name: "Feuer", color: "#DE0000"}, {name: "Wasser", color: "#1C94E9"}, {name: "Elektro", color: "#800089"}, {name: "Rasen", color: "#009C17"}, {name: "Kryo", color: "#59CFDA"}, {name: "Gestein", color: "#FFAA44"}, {name: "Luft", color: "#75C2AA"}],
         reactions:[{elements: ["Feuer", "Wasser"], name: "Vaporize", multiplier: 2, type: "amplifying"}, {elements: ["Wasser", "Feuer"], name: "Vaporize", multiplier: 1.5, type: "amplifying"}, {elements: ["Feuer", "Kryo"], name: "Melt", multiplier: 2, type: "amplifying"}, {elements: ["Kryo", "Feuer"], name: "Melt", multiplier: 1.5, type: "amplifying"}, {elements: ["Elektro", "Feuer"], name: "Overload", bonus: 175, type: "transformative"}, {elements: ["Feuer", "Elektro"], name: "Overload", bonus: 175, type: "transformative"}, {elements: ["Elektro", "Kryo"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Kryo", "Elektro"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Elektro", "Wasser"], name: "Elektro-Charge", bonus: 90, type: "transformative"}, {elements: ["Wasser", "Elektro"], name: "Elektro-Charge", bonus: 90, type: "transformative"}, {elements: ["Luft", "Feuer"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Wasser"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Elektro"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Kryo"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Gestein", "Feuer"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Wasser"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Elektro"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Kryo"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Feuer", "Rasen"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Rasen", "Feuer"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Wasser", "Kryo"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Kryo", "Wasser"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Wasser", "Rasen"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Wasser"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Elektro"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Elektro", "Rasen"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Elektro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"}, {elements: ["Rasen", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
-        {elements: ["Feuer", "Bloom"], name: "BurGesteinn", bonus: 120, type: "transformative"},
-        {elements: ["Elektro", "Bloom"], name: "Hyperbloom", bonus: 120, type: "transformative"}],
+        {elements: ["Feuer", "Bloom"], name: "BurGesteinn", bonus: 150, type: "transformative"},
+        {elements: ["Elektro", "Bloom"], name: "Hyperbloom", bonus: 150, type: "transformative"}],
         lastReactionMessage:{text: "", opacity: 1, decay: .01},
         synth: null,
         lastSoundTime: 0,
@@ -70,6 +71,7 @@ $(document).ready(function(){
     }
     $("#startButton").click(function(){
         $("#startModal").hide();
+        $("#controls-toggle").show();
         state.startTime=Date.now();
         loop();
     });
@@ -129,7 +131,7 @@ $(document).ready(function(){
         ctx.fillRect(0, 0, config.width, config.height);
     }
     function renderTerrain(){
-        ctx.fillStyle="#225528";
+        ctx.fillStyle="#225535";
         ctx.beginPath();
         ctx.moveTo(0, config.height);
         for (let p of state.terrain){
@@ -178,7 +180,7 @@ $(document).ready(function(){
     });
     function handleControls(){
         if (state.keys.faster){
-            state.player.maxSpeed=Math.min(state.player.maxSpeed+.05, 12);
+            state.player.maxSpeed=Math.min(state.player.maxSpeed+.05, 15);
             state.maxSpeedUsed=Math.max(state.maxSpeedUsed, state.player.maxSpeed);
         }
         if (state.keys.slower){
@@ -344,6 +346,7 @@ $(document).ready(function(){
             }
         }
         $("#endModal").show();
+        $("#controls-toggle").hide();
     }
     function draw(){
         ctx.clearRect(0, 0, config.width, config.height);
@@ -371,7 +374,7 @@ $(document).ready(function(){
         document.getElementById("cursor-score").innerHTML=`Score: ${state.score}`;
         if (state.lastReactionMessage.text){
             ctx.globalAlpha=state.lastReactionMessage.opacity;
-            ctx.fillStyle="#FFD700";
+            ctx.fillStyle="#FFD800";
             ctx.font="20px \"EB Garamond\"";
             ctx.fillText(state.lastReactionMessage.text, config.width/2-40, config.height/2);
             state.lastReactionMessage.opacity-=state.lastReactionMessage.decay;
@@ -529,7 +532,7 @@ $(document).ready(function(){
         ctx.arc(0, 0, 10, 0, Math.PI*2);
         ctx.fill();
         ctx.fillStyle="#000";
-        ctx.font="12px \"EB Garamond\"";
+        ctx.font="15px \"EB Garamond\"";
         ctx.textAlign="center";
         ctx.textBaseline="middle";
         ctx.fillText((timeLeft/1000).toFixed(1), 0, 0);
