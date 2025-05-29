@@ -334,7 +334,6 @@ $(document).ready(function(){
         let timeTaken=((Date.now()-state.startTime)/1000).toFixed(1);
         $("#total-score").text(`Total Score: ${state.score}`);
         $("#time-taken").text(`Time Taken: ${timeTaken} seconds`);
-        $("#max-speed-used").text(`Maximum Speed: ${state.maxSpeedUsed.toFixed(2)}`);
         let reactionList=$("#reaction-list");
         reactionList.empty();
         if (Object.keys(state.reactionCounts).length==0){
