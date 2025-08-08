@@ -45,10 +45,47 @@ $(document).ready(function(){
         trailParticles:[],
         score: 0,
         collectedElements: [],
-        elements:[{name: "Feuer", color: "#DE0000"}, {name: "Wasser", color: "#1C94E9"}, {name: "Elektro", color: "#800089"}, {name: "Rasen", color: "#009C17"}, {name: "Kryo", color: "#59CFDA"}, {name: "Gestein", color: "#FFAA44"}, {name: "Luft", color: "#75C2AA"}],
-        reactions:[{elements: ["Feuer", "Wasser"], name: "Vaporize", multiplier: 2, type: "amplifying"}, {elements: ["Wasser", "Feuer"], name: "Vaporize", multiplier: 1.5, type: "amplifying"}, {elements: ["Feuer", "Kryo"], name: "Melt", multiplier: 2, type: "amplifying"}, {elements: ["Kryo", "Feuer"], name: "Melt", multiplier: 1.5, type: "amplifying"}, {elements: ["Elektro", "Feuer"], name: "Overload", bonus: 175, type: "transformative"}, {elements: ["Feuer", "Elektro"], name: "Overload", bonus: 175, type: "transformative"}, {elements: ["Elektro", "Kryo"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Kryo", "Elektro"], name: "Superconduct", bonus: 60, type: "transformative"}, {elements: ["Elektro", "Wasser"], name: "Elektro-Charge", bonus: 90, type: "transformative"}, {elements: ["Wasser", "Elektro"], name: "Elektro-Charge", bonus: 90, type: "transformative"}, {elements: ["Luft", "Feuer"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Wasser"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Elektro"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Luft", "Kryo"], name: "Swirl", bonus: 60, type: "transformative"}, {elements: ["Gestein", "Feuer"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Wasser"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Elektro"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Gestein", "Kryo"], name: "Crystallize", bonus: 40, type: "transformative"}, {elements: ["Feuer", "Rasen"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Rasen", "Feuer"], name: "Burning", bonus: 60, type: "transformative"}, {elements: ["Wasser", "Kryo"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Kryo", "Wasser"], name: "Frozen", bonus: 40, type: "status"}, {elements: ["Wasser", "Rasen"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Wasser"], name: "Bloom", bonus: 70, type: "transformative"}, {elements: ["Rasen", "Elektro"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Elektro", "Rasen"], name: "Quicken", bonus: 60, type: "catalyze"}, {elements: ["Elektro", "Quicken"], name: "Aggravate", bonus: 200, type: "catalyze"}, {elements: ["Rasen", "Quicken"], name: "Spread", bonus: 200, type: "catalyze"},
-        {elements: ["Feuer", "Bloom"], name: "BurGesteinn", bonus: 150, type: "transformative"},
-        {elements: ["Elektro", "Bloom"], name: "Hyperbloom", bonus: 150, type: "transformative"}],
+        elements: [
+            {name: "Pyra", color: "#DE0000"},
+            {name: "Aqua", color: "#1C94E9"},
+            {name: "Voltis", color: "#800089"},
+            {name: "Flora", color: "#009C17"},
+            {name: "Glacia", color: "#59CFDA"},
+            {name: "Terra", color: "#FFAA44"},
+            {name: "Aero", color: "#75C2AA"}
+        ],
+        reactions: [
+            {elements: ["Pyra", "Aqua"], name: "Steamburst", multiplier: 2, type: "amplifying"},
+            {elements: ["Aqua", "Pyra"], name: "Steamburst", multiplier: 1.5, type: "amplifying"},
+            {elements: ["Pyra", "Glacia"], name: "Frostburn", multiplier: 2, type: "amplifying"},
+            {elements: ["Glacia", "Pyra"], name: "Frostburn", multiplier: 1.5, type: "amplifying"},
+            {elements: ["Voltis", "Pyra"], name: "Sparkflare", bonus: 175, type: "transformative"},
+            {elements: ["Pyra", "Voltis"], name: "Sparkflare", bonus: 175, type: "transformative"},
+            {elements: ["Voltis", "Glacia"], name: "Chillshock", bonus: 60, type: "transformative"},
+            {elements: ["Glacia", "Voltis"], name: "Chillshock", bonus: 60, type: "transformative"},
+            {elements: ["Voltis", "Aqua"], name: "Voltflow", bonus: 90, type: "transformative"},
+            {elements: ["Aqua", "Voltis"], name: "Voltflow", bonus: 90, type: "transformative"},
+            {elements: ["Aero", "Pyra"], name: "Galeweave", bonus: 60, type: "transformative"},
+            {elements: ["Aero", "Aqua"], name: "Galeweave", bonus: 60, type: "transformative"},
+            {elements: ["Aero", "Voltis"], name: "Galeweave", bonus: 60, type: "transformative"},
+            {elements: ["Aero", "Glacia"], name: "Galeweave", bonus: 60, type: "transformative"},
+            {elements: ["Terra", "Pyra"], name: "Stoneguard", bonus: 40, type: "transformative"},
+            {elements: ["Terra", "Aqua"], name: "Stoneguard", bonus: 40, type: "transformative"},
+            {elements: ["Terra", "Voltis"], name: "Stoneguard", bonus: 40, type: "transformative"},
+            {elements: ["Terra", "Glacia"], name: "Stoneguard", bonus: 40, type: "transformative"},
+            {elements: ["Pyra", "Flora"], name: "Wildfire", bonus: 60, type: "transformative"},
+            {elements: ["Flora", "Pyra"], name: "Wildfire", bonus: 60, type: "transformative"},
+            {elements: ["Aqua", "Glacia"], name: "Icebind", bonus: 40, type: "status"},
+            {elements: ["Glacia", "Aqua"], name: "Icebind", bonus: 40, type: "status"},
+            {elements: ["Aqua", "Flora"], name: "Lifeburst", bonus: 70, type: "transformative"},
+            {elements: ["Flora", "Aqua"], name: "Lifeburst", bonus: 70, type: "transformative"},
+            {elements: ["Flora", "Voltis"], name: "Growthspark", bonus: 60, type: "catalyze"},
+            {elements: ["Voltis", "Flora"], name: "Growthspark", bonus: 60, type: "catalyze"},
+            {elements: ["Voltis", "Growthspark"], name: "Shockbloom", bonus: 200, type: "catalyze"},
+            {elements: ["Flora", "Growthspark"], name: "Wildgrowth", bonus: 200, type: "catalyze"},
+            {elements: ["Pyra", "Lifeburst"], name: "Flamebloom", bonus: 150, type: "transformative"},
+            {elements: ["Voltis", "Lifeburst"], name: "Surgebloom", bonus: 150, type: "transformative"}
+        ],
         lastReactionMessage:{text: "", opacity: 1, decay: .01},
         synth: null,
         lastSoundTime: 0,
@@ -219,80 +256,80 @@ $(document).ready(function(){
         }
         let synthConfig;
         switch(reactionName){
-            case "Vaporize":
-                synthConfig={ oscillator:{type: "sine"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Steamburst":
+                synthConfig={oscillator: { type: "sine" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("G4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("G4", "8n", Tone.now(), 0.5);
                 break;
-            case "Melt":
-                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Frostburn":
+                synthConfig={oscillator: { type: "triangle" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("A4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("A4", "8n", Tone.now(), 0.5);
                 break;
-            case "Overload":
-                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+            case "Sparkflare":
+                synthConfig={oscillator: { type: "sawtooth" }, envelope: { attack: .01, decay: .3, sustain: 0, release: .3}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("E3", "4n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("E3", "4n", Tone.now(), 0.5);
                 break;
-            case "Superconduct":
-                synthConfig={ oscillator:{type: "square"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Chillshock":
+                synthConfig={oscillator: { type: "square" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("F3", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("F3", "8n", Tone.now(), 0.5);
                 break;
-            case "Elektro-Charge":
-                synthConfig={ oscillator:{type: "pulse"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Voltflow":
+                synthConfig={oscillator: { type: "pulse" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("D4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("D4", "8n", Tone.now(), 0.5);
                 break;
-            case "Swirl":
-                synthConfig={ oscillator:{type: "sine"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+            case "Galeweave":
+                synthConfig={oscillator: { type: "sine" }, envelope: { attack: .01, decay: .3, sustain: 0, release: .3}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("C5", "4n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("C5", "4n", Tone.now(), 0.5);
                 break;
-            case "Crystallize":
-                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Stoneguard":
+                synthConfig={oscillator: { type: "triangle" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("B3", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("B3", "8n", Tone.now(), 0.5);
                 break;
-            case "Burning":
-                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+            case "Wildfire":
+                synthConfig={oscillator: { type: "sawtooth" }, envelope: { attack: .01, decay: .3, sustain: 0, release: .3}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("G3", "4n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("G3", "4n", Tone.now(), 0.5);
                 break;
-            case "Frozen":
-                synthConfig={ oscillator:{type: "sine"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Icebind":
+                synthConfig={oscillator: { type: "sine" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("A5", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("A5", "8n", Tone.now(), 0.5);
                 break;
-            case "Bloom":
-                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Lifeburst":
+                synthConfig={oscillator: { type: "triangle" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("E4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("E4", "8n", Tone.now(), 0.5);
                 break;
-            case "Quicken":
-                synthConfig={ oscillator:{type: "pulse"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Growthspark":
+                synthConfig={oscillator: { type: "pulse" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("F4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("F4", "8n", Tone.now(), 0.5);
                 break;
-            case "Aggravate":
-                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Shockbloom":
+                synthConfig={oscillator: { type: "sawtooth" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("G4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("G4", "8n", Tone.now(), 0.5);
                 break;
-            case "Spread":
-                synthConfig={ oscillator:{type: "triangle"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Wildgrowth":
+                synthConfig={oscillator: { type: "triangle" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("A4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("A4", "8n", Tone.now(), 0.5);
                 break;
-            case "BurGesteinn":
-                synthConfig={ oscillator:{type: "sawtooth"}, envelope:{ attack: .01, decay: .3, sustain: 0, release: .3 } };
+            case "Flamebloom":
+                synthConfig={oscillator: { type: "sawtooth" }, envelope: { attack: .01, decay: .3, sustain: 0, release: .3}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("E3", "4n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("E3", "4n", Tone.now(), 0.5);
                 break;
-            case "Hyperbloom":
-                synthConfig={ oscillator:{type: "pulse"}, envelope:{ attack: .01, decay: .2, sustain: 0, release: .2 } };
+            case "Surgebloom":
+                synthConfig={oscillator: { type: "pulse" }, envelope: { attack: .01, decay: .2, sustain: 0, release: .2}};
                 state.synth.set(synthConfig);
-                state.synth.triggerAttackRelease("D4", "8n", Tone.now(), .5);
+                state.synth.triggerAttackRelease("D4", "8n", Tone.now(), 0.5);
                 break;
         }
         state.lastSoundTime=Date.now();

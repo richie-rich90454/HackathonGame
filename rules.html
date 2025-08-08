@@ -178,21 +178,28 @@
                 <ul>
                     <li><strong>Collecting Orbs</strong>:
                         <ul>
-                            <li>Maneuver your orb to collect elemental orbs that appear across the terrain.</li>
-                            <li>Elements include: Feuer (Fire), Wasser (Water), Elektro (Electro), Rasen (Grass), Kryo (Ice), Gestein (Rock), and Luft (Air).</li>
+                            <li>Guide your core orb to absorb elemental fragments scattered across the terrain.</li>
+                            <li>Available elements include: Pyra (Fire), Aqua (Water), Voltis (Electric), Flora (Nature), Glacia (Ice), Terra (Stone), and Aero (Wind).</li>
                         </ul>
                     </li>
                     <li><strong>Elemental Reactions</strong>:
                         <ul>
-                            <li>Collecting specific combinations of orbs triggers reactions that boost your score.</li>
-                            <li>Reactions fall into categories: amplifying (multiplies points), transformative (adds flat bonuses), catalyze (enhances points), or status (applies effects).</li>
+                            <li>Absorbing certain combinations of elements triggers special reactions that increase your score.</li>
+                            <li>Reactions fall into categories:
+                                <ul>
+                                    <li><em>Amplifying</em>: Multiplies your base points based on element order.</li>
+                                    <li><em>Transformative</em>: Grants a flat point bonus for combining unstable elements.</li>
+                                    <li><em>Catalytic</em>: Enhances future interactions with bonus effects.</li>
+                                    <li><em>Status</em>: Applies short-lived conditions and minor score boosts.</li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                    <li><strong>Timer System</strong>:
+                    <li><strong>Energy Timer System</strong>:
                         <ul>
-                            <li>Collecting an orb may apply a timer to your orb, lasting for 4 seconds.</li>
-                            <li>The next orb you collect can react with your last-collected element to trigger a reaction.</li>
-                            <li>If no reaction occurs within the time limit, the timer ends and you could not perform the reaction.</li>
+                            <li>Each absorbed element activates an energy window lasting 4 seconds.</li>
+                            <li>If another element is collected within this window, it may trigger a reaction based on the combination.</li>
+                            <li>If the timer expires without a match, no reaction occurs and the energy resets.</li>
                         </ul>
                     </li>
                 </ul>
@@ -201,79 +208,79 @@
                 <h2>Elemental Reactions List</h2>
                 <p>Here are all possible reactions and their effects:</p>
                 <ul>
-                    <li><strong>Vaporize</strong> (Feuer+Wasser or Wasser+Feuer):
+                    <li><strong>Steamburst</strong> (Pyra+Aqua or Aqua+Pyra):
                         <ul>
-                            <li>Amplifying: Multiplies base points by 2 (Feuer then Wasser) or 1.5 (Wasser then Feuer).</li>
+                            <li>Amplifying: Multiplies base points by 2 (Pyra first) or 1.5 (Aqua first).</li>
                         </ul>
                     </li>
-                    <li><strong>Melt</strong> (Feuer+Kryo or Kryo+Feuer):
+                    <li><strong>Frostburn</strong> (Pyra+Glacia or Glacia+Pyra):
                         <ul>
-                            <li>Amplifying: Multiplies base points by 2 (Feuer then Kryo) or 1.5 (Kryo then Feuer).</li>
+                            <li>Amplifying: Multiplies base points by 2 (Pyra first) or 1.5 (Glacia first).</li>
                         </ul>
                     </li>
-                    <li><strong>Overloaded</strong> (Elektro+Feuer or Feuer+Elektro):
+                    <li><strong>Sparkflare</strong> (Voltis+Pyra or Pyra+Voltis):
                         <ul>
-                            <li>Transformative: Adds 175 points.</li>
+                            <li>Explosive: Triggers a blast that adds 175 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Superconduct</strong> (Elektro+Kryo or Kryo+Elektro):
+                    <li><strong>Chillshock</strong> (Voltis+Glacia or Glacia+Voltis):
                         <ul>
-                            <li>Transformative: Adds 60 points.</li>
+                            <li>Frictional: Reduces stability and adds 60 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Elektro-Charged</strong> (Elektro+Wasser or Wasser+Elektro):
+                    <li><strong>Voltflow</strong> (Voltis+Aqua or Aqua+Voltis):
                         <ul>
-                            <li>Transformative: Adds 90 points.</li>
+                            <li>Conductive: Generates pulse damage, adding 90 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Swirl</strong> (Luft+Feuer/Wasser/Elektro/Kryo):
+                    <li><strong>Galeweave</strong> (Aero+Pyra/Aqua/Voltis/Glacia):
                         <ul>
-                            <li>Transformative: Adds 60 points.</li>
+                            <li>Dispersive: Scatters energy and adds 60 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Crystallize</strong> (Gestein+Feuer/Wasser/Elektro/Kryo):
+                    <li><strong>Stoneguard</strong> (Terra+Pyra/Aqua/Voltis/Glacia):
                         <ul>
-                            <li>Transformative: Adds 40 points.</li>
+                            <li>Shielding: Forms a protective shard and adds 40 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Burning</strong> (Feuer+Rasen or Rasen+Feuer):
+                    <li><strong>Wildfire</strong> (Pyra+Flora or Flora+Pyra):
                         <ul>
-                            <li>Transformative: Adds 60 points.</li>
+                            <li>Burning: Sustains damage and adds 60 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Frozen</strong> (Wasser+Kryo or Kryo+Wasser):
+                    <li><strong>Icebind</strong> (Aqua+Glacia or Glacia+Aqua):
                         <ul>
-                            <li>Status: Adds 40 points.</li>
+                            <li>Status: Freezes target momentarily, adding 40 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Bloom</strong> (Wasser+Rasen or Rasen+Wasser):
+                    <li><strong>Lifeburst</strong> (Aqua+Flora or Flora+Aqua):
                         <ul>
-                            <li>Transformative: Adds 70 points.</li>
+                            <li>Reactive Growth: Creates an energy pod that adds 70 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Quicken</strong> (Rasen+Elektro or Elektro+Rasen):
+                    <li><strong>Growthspark</strong> (Flora+Voltis or Voltis+Flora):
                         <ul>
-                            <li>Catalyze: Adds 60 points.</li>
+                            <li>Catalytic: Accelerates biological charge and adds 60 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Aggravate</strong> (Elektro+Quicken):
+                    <li><strong>Shockbloom</strong> (Voltis+Growthspark):
                         <ul>
-                            <li>Catalyze: Adds 200 points.</li>
+                            <li>Chain Effect: Enhances with electric surge, adding 200 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Spread</strong> (Rasen+Quicken):
+                    <li><strong>Wildgrowth</strong> (Flora+Growthspark):
                         <ul>
-                            <li>Catalyze: Adds 200 points.</li>
+                            <li>Chain Effect: Strengthens with rapid bloom, adding 200 points.</li>
                         </ul>
                     </li>
-                    <li><strong>BurGesteinn</strong> (Feuer+Bloom):
+                    <li><strong>Flamebloom</strong> (Pyra+Lifeburst):
                         <ul>
-                            <li>Transformative: Adds 120 points.</li>
+                            <li>Detonative: Causes pod to combust, adding 120 points.</li>
                         </ul>
                     </li>
-                    <li><strong>Hyperbloom</strong> (Elektro+Bloom):
+                    <li><strong>Surgebloom</strong> (Voltis+Lifeburst):
                         <ul>
-                            <li>Transformative: Adds 120 points.</li>
+                            <li>Electric Trigger: Zaps the pod into action, adding 120 points.</li>
                         </ul>
                     </li>
                 </ul>
