@@ -2,7 +2,7 @@
 ## Overview
 It is an immersive, browser-based fantasy game where players pilot an orb to collect elemental orbs, triggering reactions to score points. The objective is to reach 10,000 points as quickly as possible by navigating a dynamic terrain and strategically combining elements. Inspired by *Flappy Bird* for its gameplay mechanics and *Genshin Impact* for its elemental reaction system, the game offers intuitive controls, engaging visuals, and a rich audio experience.
 ## Features
-- **Elemental Reactions**: Collect orbs of different elements (e.g., Feuer, Wasser, Elektro) to trigger reactions like Vaporize, Melt, or Overload, each providing unique point bonuses.
+- **Elemental Reactions**: Collect orbs of different elements to trigger reactions, each providing unique point bonuses.
 - **Dynamic Terrain**: Navigate a procedurally generated landscape with a scrolling sky and terrain.
 - **Responsive Controls**: Supports both keyboard and touch inputs for vertical movement and speed adjustments.
 - **Audio Integration**: Utilizes Tone.js for sound effects and MIDI-based background music to enhance immersion.
