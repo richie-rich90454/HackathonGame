@@ -1,6 +1,6 @@
-# Lost Realms
+# A Game Made for the Basis China 2025 Network Hackathon
 ## Overview
-Lost Realms is an immersive, browser-based fantasy game where players pilot an orb to collect elemental orbs, triggering reactions to score points. The objective is to reach 10,000 points as quickly as possible by navigating a dynamic terrain and strategically combining elements. Inspired by *Flappy Bird* for its gameplay mechanics and *Genshin Impact* for its elemental reaction system, the game offers intuitive controls, engaging visuals, and a rich audio experience.
+It is an immersive, browser-based fantasy game where players pilot an orb to collect elemental orbs, triggering reactions to score points. The objective is to reach 10,000 points as quickly as possible by navigating a dynamic terrain and strategically combining elements. Inspired by *Flappy Bird* for its gameplay mechanics and *Genshin Impact* for its elemental reaction system, the game offers intuitive controls, engaging visuals, and a rich audio experience.
 ## Features
 - **Elemental Reactions**: Collect orbs of different elements (e.g., Feuer, Wasser, Elektro) to trigger reactions like Vaporize, Melt, or Overload, each providing unique point bonuses.
 - **Dynamic Terrain**: Navigate a procedurally generated landscape with a scrolling sky and terrain.
@@ -9,7 +9,7 @@ Lost Realms is an immersive, browser-based fantasy game where players pilot an o
 - **Cross-Device Compatibility**: Optimized for desktop and mobile devices with responsive design and touch controls.
 - **Endgame Metrics**: Displays total score, time taken, and reaction statistics upon reaching 10,000 points.
 ## Installation
-To run Lost Realms locally, follow these steps:
+To run It locally, follow these steps:
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/richie-rich90454/lost-realms.git
