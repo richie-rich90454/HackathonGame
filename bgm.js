@@ -1,3 +1,4 @@
+//terser bgm.js -o bgm.min.js --compress --mangle
 let isPlaying=false;
 let midiData=null;
 let synth=null;
@@ -25,7 +26,7 @@ async function initAudio(){
 }
 async function loadMidi(){
     try{
-        let res=await fetch("lost_realms.mid");
+        let res=await fetch("hackathon_game.mid");
         if (!res.ok) throw new Error(res.status);
         let buf=await res.arrayBuffer();
         return new Midi(buf);
