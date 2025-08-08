@@ -12,8 +12,8 @@ It is an immersive, browser-based fantasy game where players pilot an orb to col
 To run It locally, follow these steps:
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/richie-rich90454/lost-realms.git
-   cd lost-realms
+   git clone https://github.com/richie-rich90454/HackathonGame.git
+   cd HackathonGame
    ```
 2. **Install Dependencies**:
    Ensure Node.js is installed, then run:
@@ -43,7 +43,7 @@ To run It locally, follow these steps:
 - `bgm.js`: Background music handling with Tone.js and MIDI.
 - `server.js`: Fastify server configuration.
 - `NotoSans-VariableFont_wdth_wght.ttf`, `EBGaramond-VariableFont_wght.ttf`: Custom fonts for styling.
-- `lost_realms.mid`: MIDI file for background music.
+- `HackathonGame.mid`: MIDI file for background music.
 - `favicon.ico`: Game favicon.
 ## Usage
 1. **Start the Game**:
