@@ -9,7 +9,7 @@ It is an immersive, browser-based fantasy game where players pilot an orb to col
 - **Cross-Device Compatibility**: Optimized for desktop and mobile devices with responsive design and touch controls.
 - **Endgame Metrics**: Displays total score, time taken, and reaction statistics upon reaching 10,000 points.
 ## Installation
-To run It locally, follow these steps:
+To run it locally, follow these steps:
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/richie-rich90454/HackathonGame.git
