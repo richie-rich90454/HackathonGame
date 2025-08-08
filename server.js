@@ -3,7 +3,7 @@ let fastify=require("fastify")({ logger: false });
 let fastifyStatic=require("@fastify/static");
 let fastifyCompress=require("@fastify/compress");
 let PORT=6008;
-let publicDir=path.join(__dirname, "/");
+let publicDir=path.join(__dirname, "/public");
 fastify.register(fastifyCompress);
 fastify.register(fastifyStatic,{
     root: publicDir,
